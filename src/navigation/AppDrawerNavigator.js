@@ -12,10 +12,16 @@ import SettingsScreen from "../screens/SettingsScreen";
 
 const AppTabNavigator = createBottomTabNavigator({
   Home: {
-    screen: HomeScreen
+    screen: HomeScreen,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => <Icon name="ios-home" size={20} />
+    }
   },
   Settings: {
-    screen: SettingsScreen
+    screen: SettingsScreen,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => <Icon name="md-settings" size={20} />
+    }
   }
 });
 
