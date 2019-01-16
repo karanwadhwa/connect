@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Text, View, Button, AsyncStorage, StyleSheet } from "react-native";
+import { AsyncStorage } from "react-native";
+
+import LoginPage from "../components/Login/LoginPage";
 
 class LoginScreen extends Component {
   login = async () => {
@@ -16,21 +18,8 @@ class LoginScreen extends Component {
   };
 
   render() {
-    return (
-      <View style={styles.container}>
-        <Button title="Complete Login" onPress={this.login} />
-      </View>
-    );
+    return <LoginPage />;
   }
 }
 
 export default LoginScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
