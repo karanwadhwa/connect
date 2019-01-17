@@ -5,6 +5,10 @@ import Icon from "@expo/vector-icons/Ionicons";
 const defaultBorderColor = "rgba(172,172,172,0.7)";
 
 class FormInput extends PureComponent {
+  _handleChange = value => {
+    this.props.onChange(this.props.name, value);
+  };
+
   render() {
     const {
       label,
@@ -21,6 +25,7 @@ class FormInput extends PureComponent {
         <Text style={styles.error}>{error}</Text>
         <View style={[styles.inputBox, { borderColor }]}>
           <TextInput
+            onChangeText={this._handleChange}
             style={{ width: "90%" }}
             placeholder={placeholder}
             placeholderTextColor="rgba(172,172,172,0.5)"

@@ -3,56 +3,67 @@ import {
   Text,
   View,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Alert
 } from "react-native";
+import { Formik } from "formik";
 
 import FormInput from "../common/FormInput";
+import HorizontalRule from "../common/HorizontalRule";
 
 class LoginForm extends Component {
+  _handleSubmit = values => {
+    Alert.alert(JSON.stringify(values));
+  };
+
   render() {
     return (
       <KeyboardAvoidingView style={styles.formContainer}>
-        <FormInput
-          label="Username"
-          placeholder="Registration No or Staff ID"
-          autoCorrect={false}
-          returnKeyType="next"
-          blurOnSubmit={false}
-          icon="ios-contact"
-          //maxLength={5}
-        />
+        <Formik
+          initialValues={{ username: "", password: "" }}
+          onSubmit={this._handleSubmit}
+          render={({ values, handleSubmit, setFieldValue }) => (
+            <React.Fragment>
+              <FormInput
+                label="Username"
+                placeholder="Registration No or Staff ID"
+                autoCorrect={false}
+                returnKeyType="next"
+                blurOnSubmit={false}
+                icon="ios-contact"
+                //maxLength={5}
 
-        <FormInput
-          label="Confirm Password"
-          placeholder="Your Password"
-          autoCorrect={false}
-          secureTextEntry
-          returnKeyType="go"
-          icon="ios-lock"
-        />
+                name="username"
+                value={values.username}
+                onChange={setFieldValue}
+              />
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>LOGIN</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ width: 125, alignSelf: "center", paddingTop: 10 }}
-          >
-            <Text style={{ color: "#107AFB", fontFamily: "nunito-bold" }}>
-              Forgot Password?
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            width: "80%",
-            paddingTop: 30,
-            alignSelf: "center",
-            borderBottomColor: "rgba(172,172,172,0.5)",
-            borderBottomWidth: 0.5
-          }}
+              <FormInput
+                label="Password"
+                placeholder="Your Password"
+                autoCorrect={false}
+                secureTextEntry
+                returnKeyType="go"
+                icon="ios-lock"
+                name="password"
+                value={values.password}
+                onChange={setFieldValue}
+              />
+
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                  <Text style={styles.buttonText}>LOGIN</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={{ width: 125, alignSelf: "center" }}>
+                  <Text style={{ color: "#107AFB", fontFamily: "nunito-bold" }}>
+                    Forgot Password?
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <HorizontalRule width="80%" />
+            </React.Fragment>
+          )}
         />
       </KeyboardAvoidingView>
     );
@@ -88,6 +99,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#107AFB",
+    marginBottom: 10,
     paddingVertical: 14,
     borderRadius: 5,
     width: "100%", //100
