@@ -8,30 +8,29 @@ import {
   KeyboardAvoidingView
 } from "react-native";
 
+import FormInput from "../common/FormInput";
+
 class LoginForm extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.formContainer}>
-        <Text style={styles.inputLabel}>Username</Text>
-        <TextInput
-          style={styles.input}
+        <FormInput
+          label="Username"
           placeholder="Registration No or Staff ID"
-          placeholderTextColor="rgba(172,172,172,0.5)"
           autoCorrect={false}
           returnKeyType="next"
-          onSubmitEditing={() => this.passwordRef.focus()}
           blurOnSubmit={false}
+          icon="ios-contact"
+          //maxLength={5}
         />
 
-        <Text style={styles.inputLabel}>Password</Text>
-        <TextInput
-          style={styles.input}
+        <FormInput
+          label="Confirm Password"
           placeholder="Your Password"
-          placeholderTextColor="rgba(172,172,172,0.5)"
           autoCorrect={false}
           secureTextEntry
-          ref={passwordRef => (this.passwordRef = passwordRef)}
           returnKeyType="go"
+          icon="ios-lock"
         />
 
         <View style={styles.buttonContainer}>
