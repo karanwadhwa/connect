@@ -18,7 +18,7 @@ class LoginScreen extends Component {
   };
 
   render() {
-    return <LoginPage />;
+    return <LoginPage navigation={this.props.navigation} />;
   }
 }
 

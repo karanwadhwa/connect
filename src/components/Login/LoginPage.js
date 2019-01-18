@@ -11,7 +11,7 @@ class LoginPage extends Component {
       <View style={[styles.container, styles.androidHeader]}>
         <LoginTitle />
         <LoginForm />
-        <LoginBottom />
+        <LoginBottom navigation={this.props.navigation} />
       </View>
     );
   }
