@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  ScrollView,
-  Text,
-  Button,
-  StatusBar,
-  Platform,
-  StyleSheet
-} from "react-native";
+import { ScrollView, StatusBar, Platform, StyleSheet } from "react-native";
 
 import RegisterTitle from "./RegisterTitle";
 import RegistrationForm from "./RegistrationForm";
