@@ -5,17 +5,33 @@ import {
   StyleSheet,
   TouchableOpacity,
   KeyboardAvoidingView,
-  Alert
+  Alert,
+  AsyncStorage
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 
 import FormInput from "../common/FormInput";
 import HorizontalRule from "../common/HorizontalRule";
 
 class LoginForm extends Component {
-  _handleSubmit = values => {
-    Alert.alert(JSON.stringify(values));
+  _handleSubmit = (values, bag) => {
+    axios
+      .post("http://192.168.29.207:5000/api/auth/login", {
+        username: values.username,
+        password: values.password
+      })
+      .then(response => {
+        // server will return an object, AsyncStorage takes in strings
+        // convert the object to a string then store it in AsyncStorage
+        AsyncStorage.setItem("userToken", JSON.stringify(response.data.token));
+        this.props.navigation.navigate("AuthLoadingScreen");
+      })
+      .catch(error => {
+        bag.setSubmitting(false);
+        bag.setErrors(error.response.data);
+      });
   };
 
   render() {
@@ -37,7 +53,8 @@ class LoginForm extends Component {
             errors,
             touched,
             setFieldTouched,
-            isValid
+            isValid,
+            setSubmitting
           }) => (
             <React.Fragment>
               <FormInput
@@ -81,6 +98,7 @@ class LoginForm extends Component {
                 <TouchableOpacity style={{ width: 125, alignSelf: "center" }}>
                   <Text style={{ color: "#107AFB", fontFamily: "nunito-bold" }}>
                     Forgot Password?
+                    <Text>{this.props.err}</Text>
                   </Text>
                 </TouchableOpacity>
               </View>
