@@ -8,6 +8,7 @@ import {
   Alert
 } from "react-native";
 import { Formik } from "formik";
+import * as Yup from "yup";
 
 import FormInput from "../common/FormInput";
 import HorizontalRule from "../common/HorizontalRule";
@@ -23,7 +24,21 @@ class LoginForm extends Component {
         <Formik
           initialValues={{ username: "", password: "" }}
           onSubmit={this._handleSubmit}
-          render={({ values, handleSubmit, setFieldValue }) => (
+          validationSchema={Yup.object().shape({
+            username: Yup.string().required() || Yup.number().required(),
+            password: Yup.string()
+              .min(8)
+              .required()
+          })}
+          render={({
+            values,
+            handleSubmit,
+            setFieldValue,
+            errors,
+            touched,
+            setFieldTouched,
+            isValid
+          }) => (
             <React.Fragment>
               <FormInput
                 label="Username"
@@ -37,6 +52,8 @@ class LoginForm extends Component {
                 name="username"
                 value={values.username}
                 onChange={setFieldValue}
+                onTouch={setFieldTouched}
+                error={touched.username && errors.username}
               />
 
               <FormInput
@@ -49,10 +66,16 @@ class LoginForm extends Component {
                 name="password"
                 value={values.password}
                 onChange={setFieldValue}
+                onTouch={setFieldTouched}
+                error={touched.password && errors.password}
               />
 
               <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={handleSubmit}
+                  disabled={!isValid}
+                >
                   <Text style={styles.buttonText}>LOGIN</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ width: 125, alignSelf: "center" }}>

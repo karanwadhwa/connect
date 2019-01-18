@@ -9,6 +9,10 @@ class FormInput extends PureComponent {
     this.props.onChange(this.props.name, value);
   };
 
+  _handleTouch = () => {
+    this.props.onTouch(this.props.name);
+  };
+
   render() {
     const {
       label,
@@ -26,6 +30,7 @@ class FormInput extends PureComponent {
         <View style={[styles.inputBox, { borderColor }]}>
           <TextInput
             onChangeText={this._handleChange}
+            onBlur={this._handleTouch}
             style={{ width: "90%" }}
             placeholder={placeholder}
             placeholderTextColor="rgba(172,172,172,0.5)"
