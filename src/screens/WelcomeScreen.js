@@ -20,7 +20,16 @@ class WelcomeScreen extends Component {
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate("Login")}
           >
-            <Text style={{ fontSize: 30, opacity: 0.6 }}>Login</Text>
+            <Text
+              style={{
+                fontFamily: "nunito-regular",
+                fontSize: 40,
+                opacity: 0.6,
+                padding: 60
+              }}
+            >
+              Login
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.polyClip} />
@@ -28,7 +37,16 @@ class WelcomeScreen extends Component {
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate("Register")}
           >
-            <Text style={{ fontSize: 30, opacity: 0.6 }}>Register</Text>
+            <Text
+              style={{
+                fontFamily: "nunito-regular",
+                fontSize: 40,
+                opacity: 0.6,
+                padding: 60
+              }}
+            >
+              Register
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.footer} />
