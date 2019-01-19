@@ -5,23 +5,21 @@ import {
   StyleSheet,
   TouchableOpacity,
   KeyboardAvoidingView,
-  Alert,
   AsyncStorage
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
+import API from "../../config/api";
 
 import FormInput from "../common/FormInput";
 import HorizontalRule from "../common/HorizontalRule";
 
 class LoginForm extends Component {
   _handleSubmit = (values, bag) => {
-    axios
-      .post("http://192.168.29.207:5000/api/auth/login", {
-        username: values.username,
-        password: values.password
-      })
+    API.post(`/api/auth/login`, {
+      username: values.username,
+      password: values.password
+    })
       .then(response => {
         // server will return an object, AsyncStorage takes in strings
         // convert the object to a string then store it in AsyncStorage
