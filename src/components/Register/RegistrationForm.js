@@ -5,7 +5,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   KeyboardAvoidingView,
-  Alert
+  Alert,
+  Picker,
+  Platform
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -26,6 +28,7 @@ class LoginForm extends Component {
             fname: "",
             lname: "",
             userID: "",
+            userType: "",
             email: "",
             password: "",
             password2: ""
@@ -34,6 +37,7 @@ class LoginForm extends Component {
           validationSchema={Yup.object().shape({
             fname: Yup.string().required("Your first name is required"),
             lname: Yup.string().required("Your last name is required"),
+            userType: Yup.string().required("Select User Type"),
             userID: Yup.string().required() || Yup.number().required(),
             email: Yup.string()
               .email("Enter a valid @sakec email")
@@ -81,6 +85,19 @@ class LoginForm extends Component {
                 onTouch={setFieldTouched}
                 error={touched.lname && errors.lname}
               />
+
+              <Text style={styles.lable}>User Type</Text>
+              <Text style={styles.error}>{errors.userType}</Text>
+              <View style={styles.androidPickerView}>
+                <Picker
+                  name="userType"
+                  selectedValue={values.userType}
+                  onValueChange={value => setFieldValue("userType", value)}
+                >
+                  <Picker.Item label="Student" value="student" />
+                  <Picker.Item label="Professor" value="professor" />
+                </Picker>
+              </View>
 
               <FormInput
                 label="User ID"
@@ -181,5 +198,27 @@ const styles = StyleSheet.create({
     textAlign: "center",
     //fontWeight: "700"
     fontFamily: "nunito-extra-bold"
+  },
+  label: {
+    fontWeight: "700",
+    color: "#333333",
+    opacity: 0.8
+  },
+  error: {
+    fontWeight: "500",
+    color: "red",
+    opacity: 0.7
+  },
+  androidPickerView: {
+    ...Platform.select({
+      android: {
+        borderWidth: 1,
+        borderColor: "rgba(172, 172, 172, 0.7)",
+        marginBottom: 20,
+        borderRadius: 5,
+        height: 45,
+        justifyContent: "center"
+      }
+    })
   }
 });
