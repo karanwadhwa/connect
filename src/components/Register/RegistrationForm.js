@@ -117,7 +117,7 @@ class LoginForm extends Component {
                 error={touched.lname && errors.lname}
               />
 
-              <Text style={styles.lable}>User Type</Text>
+              <Text style={styles.label}>User Type</Text>
               <Text style={styles.error}>{errors.userType}</Text>
               <View style={styles.androidPickerView}>
                 <Picker
