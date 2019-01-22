@@ -10,7 +10,7 @@ class RegisterPage extends Component {
     return (
       <ScrollView style={[styles.container, styles.androidHeader]}>
         <RegisterTitle />
-        <RegistrationForm />
+        <RegistrationForm navigation={this.props.navigation} />
         <RegisterBottom navigation={this.props.navigation} />
       </ScrollView>
     );

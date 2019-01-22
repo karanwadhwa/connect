@@ -12,12 +12,43 @@ import {
 import { Formik } from "formik";
 import * as Yup from "yup";
 
+import API from "../../config/api";
+
 import FormInput from "../common/FormInput";
 import HorizontalRule from "../common/HorizontalRule";
 
 class LoginForm extends Component {
-  _handleSubmit = values => {
-    Alert.alert(JSON.stringify(values));
+  _handleSubmit = (values, bag) => {
+    API.post("/api/auth/register", {
+      fname: values.fname,
+      lname: values.lname,
+      userID: values.userID,
+      email: values.email,
+      userType: values.userType,
+      password: values.password,
+      password2: values.password2
+    })
+      .then(response => {
+        Alert.alert(
+          "Account Created. Login to continue.",
+          `Name: ${response.data.fname} ${response.data.lname}\nUser ID: ${
+            response.data.userID
+          }\nEmail: ${response.data.email}`,
+          [
+            {
+              text: "Login",
+              onPress: () => this.props.navigation.navigate("Login")
+            }
+          ],
+          { cancelable: false }
+        );
+      })
+      .catch(error => {
+        if (error.response) {
+          bag.setSubmitting(false);
+          bag.setErrors(error.response.data);
+        }
+      });
   };
 
   render() {
@@ -28,7 +59,7 @@ class LoginForm extends Component {
             fname: "",
             lname: "",
             userID: "",
-            userType: "",
+            userType: "student",
             email: "",
             password: "",
             password2: ""

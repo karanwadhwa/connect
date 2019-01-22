@@ -16,7 +16,7 @@ import HorizontalRule from "../common/HorizontalRule";
 
 class LoginForm extends Component {
   _handleSubmit = (values, bag) => {
-    API.post(`/api/auth/login`, {
+    API.post("/api/auth/login", {
       username: values.username,
       password: values.password
     })
