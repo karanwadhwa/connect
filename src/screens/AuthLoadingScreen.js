@@ -22,7 +22,6 @@ class AuthLoadingScreen extends Component {
     const token = await AsyncStorage.getItem("userToken");
 
     this.props.setToken(JSON.parse(token));
-    console.log(this.props);
 
     this.props.navigation.navigate(this.props.accessToken ? "App" : "Auth");
   };
