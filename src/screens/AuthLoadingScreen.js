@@ -6,18 +6,25 @@ import {
   AsyncStorage,
   ActivityIndicator
 } from "react-native";
+import { connect } from "react-redux";
+
+import { setToken } from "../store/actions/auth";
 
 class AuthLoadingScreen extends Component {
   constructor() {
     super();
 
+    //this.props.setToken;
     this.loadApp();
   }
 
   loadApp = async () => {
-    const userToken = await AsyncStorage.getItem("userToken");
+    const token = await AsyncStorage.getItem("userToken");
 
-    this.props.navigation.navigate(userToken ? "App" : "Auth");
+    this.props.setToken(JSON.parse(token));
+    console.log(this.props);
+
+    this.props.navigation.navigate(this.props.accessToken ? "App" : "Auth");
   };
 
   render() {
@@ -29,7 +36,16 @@ class AuthLoadingScreen extends Component {
   }
 }
 
-export default AuthLoadingScreen;
+const mapStateToProps = state => {
+  return {
+    accessToken: state.auth.accessToken
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { setToken }
+)(AuthLoadingScreen);
 
 const styles = StyleSheet.create({
   container: {
