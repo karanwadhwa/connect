@@ -38,7 +38,8 @@ class App extends Component {
         "nunito-regular": require("./src/assets/fonts/Nunito-Regular.ttf"),
         "nunito-light": require("./src/assets/fonts/Nunito-Light.ttf"),
         "nunito-bold": require("./src/assets/fonts/Nunito-Bold.ttf"),
-        "nunito-extra-bold": require("./src/assets/fonts/Nunito-ExtraBold.ttf")
+        "nunito-extra-bold": require("./src/assets/fonts/Nunito-ExtraBold.ttf"),
+        "Rubik-Regular": require("./src/assets/fonts/Rubik-Regular.ttf")
       })
     ]);
   };
