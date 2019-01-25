@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { fetchPosts } from "../store/actions/posts";
 import { fetchProfile } from "../store/actions/profile";
 
+import HomePage from "../components/Home/HomePage";
+
 class HomeScreen extends Component {
   componentDidMount() {
     this.props.fetchPosts(this.props.accessToken);
@@ -15,7 +17,7 @@ class HomeScreen extends Component {
     if (this.props.postLoading) {
       return <ActivityIndicator />;
     } else {
-      return <Text>HomeScreen</Text>;
+      return <HomePage />;
     }
   }
 
@@ -40,10 +42,5 @@ export default connect(
 )(HomeScreen);
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
+  container: { flex: 1 }
 });
