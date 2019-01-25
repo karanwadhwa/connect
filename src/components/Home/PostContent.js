@@ -2,23 +2,19 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { View, Row, Caption, Text } from "@shoutem/ui";
 
-const PostContent = props => {
+const PostContent = ({ post }) => {
   return (
     <Row>
       <View>
-        <Text styleName="multiline">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          Optioaccusantium incidunt temporibus excepturi dolore, velit illo
-          dolorum dolor omnis, quidem deleniti, quas animi quia debitis.
-          Blanditiis laboriosam deserunt perferendis velit, voluptates accusamus
-          itaque impedit, hic sint et repellat cupiditate ducimus.
-        </Text>
+        <Text styleName="multiline">{post.body}</Text>
         <View styleName="horizontal" style={{ paddingTop: 5 }}>
           <Caption styleName="bold" style={styles.meta}>
-            140 Likes{"\t \t"}
+            {post.likes.length} {post.likes.length === 1 ? "Like" : "Likes"}
+            {"\t \t"}
           </Caption>
           <Caption styleName="bold" style={styles.meta}>
-            12 Comments
+            {post.comments.length}{" "}
+            {post.comments.length === 1 ? "Comment" : "Comments"}
           </Caption>
         </View>
       </View>

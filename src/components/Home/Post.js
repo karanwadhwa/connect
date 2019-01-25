@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { View, FlatList, Text } from "react-native";
+import { connect } from "react-redux";
 import { Divider } from "@shoutem/ui";
 
 import Card from "../common/Card";
@@ -7,17 +9,35 @@ import PostContent from "./PostContent";
 import PostFooter from "./PostFooter";
 
 export class Post extends Component {
-  render() {
+  renderPost({ item }) {
     return (
       <Card>
-        <PostHeader />
+        <PostHeader post={item} />
         <Divider styleName="line" />
-        <PostContent />
+        <PostContent post={item} />
         <Divider styleName="line" />
         <PostFooter />
       </Card>
     );
   }
+
+  render() {
+    return (
+      <View style={{ marginVertical: 5 }}>
+        <FlatList
+          data={this.props.posts}
+          renderItem={this.renderPost}
+          keyExtractor={post => post._id}
+        />
+      </View>
+    );
+  }
 }
 
-export default Post;
+const mapStateToProps = state => {
+  return {
+    posts: state.posts.posts
+  };
+};
+
+export default connect(mapStateToProps)(Post);
