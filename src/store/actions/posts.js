@@ -1,7 +1,8 @@
-import { FETCH_POSTS } from "./types";
+import { FETCH_POSTS, POST_LOADING } from "./types";
 import API from "../../config/api";
 
 export const fetchPosts = token => dispatch => {
+  dispatch(setPostLoading());
   API.get("/api/posts", {
     headers: {
       Authorization: token
@@ -12,4 +13,10 @@ export const fetchPosts = token => dispatch => {
       payload: response.data
     });
   });
+};
+
+export const setPostLoading = () => {
+  return {
+    type: POST_LOADING
+  };
 };

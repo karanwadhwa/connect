@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, StyleSheet, AsyncStorage } from "react-native";
+import { Text, View, StyleSheet, ActivityIndicator } from "react-native";
 import { connect } from "react-redux";
 
 import { fetchPosts } from "../store/actions/posts";
@@ -11,12 +11,16 @@ class HomeScreen extends Component {
     this.props.fetchProfile(this.props.accessToken);
   }
 
+  renderHomescreen() {
+    if (this.props.postLoading) {
+      return <ActivityIndicator />;
+    } else {
+      return <Text>HomeScreen</Text>;
+    }
+  }
+
   render() {
-    return (
-      <View style={styles.container}>
-        <Text>HomeScreen</Text>
-      </View>
-    );
+    return <View style={styles.container}>{this.renderHomescreen()}</View>;
   }
 }
 
@@ -24,6 +28,7 @@ const mapStateToProps = state => {
   return {
     accessToken: state.auth.accessToken,
     posts: state.posts.posts,
+    postLoading: state.posts.loading,
     profile: state.profile.profileData,
     profileLoading: state.profile.profileLoading
   };

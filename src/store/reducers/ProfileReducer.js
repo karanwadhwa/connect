@@ -7,12 +7,11 @@ const inititalState = {
 
 export default (state = inititalState, action) => {
   switch (action.type) {
-    case PROFILE_LOADING: {
+    case PROFILE_LOADING:
       return {
         ...state,
         loading: true
       };
-    }
     case FETCH_PROFILE:
       return {
         ...state,
