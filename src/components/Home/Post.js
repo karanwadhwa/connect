@@ -3,6 +3,8 @@ import { View, FlatList, Text } from "react-native";
 import { connect } from "react-redux";
 import { Divider } from "@shoutem/ui";
 
+import { fetchPosts } from "../../store/actions/posts";
+
 import Card from "../common/Card";
 import PostHeader from "./PostHeader";
 import PostContent from "./PostContent";
@@ -21,13 +23,19 @@ export class Post extends Component {
     );
   }
 
+  handleRefresh = () => {
+    this.props.fetchPosts(this.props.accessToken);
+  };
+
   render() {
     return (
-      <View style={{ marginVertical: 5 }}>
+      <View>
         <FlatList
           data={this.props.posts}
           renderItem={this.renderPost}
           keyExtractor={post => post._id}
+          refreshing={this.props.refreshing}
+          onRefresh={this.handleRefresh}
         />
       </View>
     );
@@ -36,8 +44,14 @@ export class Post extends Component {
 
 const mapStateToProps = state => {
   return {
-    posts: state.posts.posts
+    accessToken: state.auth.accessToken,
+    posts: state.posts.posts,
+    loading: state.posts.loading,
+    refreshing: state.posts.refreshing
   };
 };
 
-export default connect(mapStateToProps)(Post);
+export default connect(
+  mapStateToProps,
+  { fetchPosts }
+)(Post);

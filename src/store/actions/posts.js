@@ -1,7 +1,8 @@
-import { FETCH_POSTS, POST_LOADING } from "./types";
+import { FETCH_POSTS, POST_LOADING, POST_REFRESHING } from "./types";
 import API from "../../config/api";
 
 export const fetchPosts = token => dispatch => {
+  dispatch(setPostRefreshing());
   dispatch(setPostLoading());
   API.get("/api/posts", {
     headers: {
@@ -18,5 +19,11 @@ export const fetchPosts = token => dispatch => {
 export const setPostLoading = () => {
   return {
     type: POST_LOADING
+  };
+};
+
+export const setPostRefreshing = () => {
+  return {
+    type: POST_REFRESHING
   };
 };
