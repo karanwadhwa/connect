@@ -1,7 +1,8 @@
-import { SET_TOKEN } from "../actions/types";
+import { SET_TOKEN, SET_USER } from "../actions/types";
 
 const inititalState = {
-  accessToken: null
+  accessToken: null,
+  user: {}
 };
 
 export default (state = inititalState, action) => {
@@ -10,6 +11,11 @@ export default (state = inititalState, action) => {
       return {
         ...state,
         accessToken: action.payload
+      };
+    case SET_USER:
+      return {
+        ...state,
+        user: action.payload
       };
     default:
       return state;

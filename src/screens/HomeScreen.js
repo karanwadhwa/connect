@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import { fetchPosts } from "../store/actions/posts";
 import { fetchProfile } from "../store/actions/profile";
+import { setUser } from "../store/actions/auth";
 
 import HomePage from "../components/Home/HomePage";
 
@@ -11,6 +12,7 @@ class HomeScreen extends Component {
   componentDidMount() {
     this.props.fetchPosts(this.props.accessToken);
     this.props.fetchProfile(this.props.accessToken);
+    this.props.setUser(this.props.accessToken);
   }
 
   renderHomescreen() {
@@ -38,7 +40,7 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchPosts, fetchProfile }
+  { fetchPosts, fetchProfile, setUser }
 )(HomeScreen);
 
 const styles = StyleSheet.create({
