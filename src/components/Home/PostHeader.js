@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, FlatList } from "react-native";
 import { View, Row, Title, Caption, Image } from "@shoutem/ui";
+import moment from "moment";
 import { startCase } from "lodash";
 
 const PostHeader = ({ post }) => {
@@ -16,7 +17,7 @@ const PostHeader = ({ post }) => {
       <View styleName="vertical">
         <View styleName="horizontal space-between">
           <Title>{startCase(post.author)}</Title>
-          <Caption>{post.date}</Caption>
+          <Caption>{moment(post.date).calendar()}</Caption>
         </View>
         <View styleName="horizontal">
           <FlatList
