@@ -10,18 +10,18 @@ import PostHeader from "./PostHeader";
 import PostContent from "./PostContent";
 import PostFooter from "./PostFooter";
 
-export class Post extends Component {
-  renderPost({ item }) {
+class Post extends Component {
+  renderPost = ({ item }) => {
     return (
       <Card>
         <PostHeader post={item} />
         <Divider styleName="line" />
         <PostContent post={item} />
         <Divider styleName="line" />
-        <PostFooter />
+        <PostFooter post={item} />
       </Card>
     );
-  }
+  };
 
   handleRefresh = () => {
     this.props.fetchPosts(this.props.accessToken);

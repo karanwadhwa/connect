@@ -1,10 +1,16 @@
-import { FETCH_POSTS, POST_LOADING, POST_REFRESHING } from "../actions/types";
+import {
+  FETCH_POSTS,
+  POST_LOADING,
+  POST_REFRESHING,
+  LIKE_POST
+} from "../actions/types";
 
 const inititalState = {
   posts: {},
   selectedPost: null,
   loading: false,
-  refreshing: false
+  refreshing: false,
+  error: {}
 };
 
 export default (state = inititalState, action) => {
@@ -25,6 +31,14 @@ export default (state = inititalState, action) => {
         posts: action.payload,
         loading: false,
         refreshing: false
+      };
+    case LIKE_POST:
+      let posts = [...state.posts];
+      let index = posts.findIndex(post => post._id === action.payload._id);
+      posts[index] = action.payload;
+      return {
+        ...state,
+        posts
       };
     default:
       return state;
