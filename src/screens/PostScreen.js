@@ -1,31 +1,23 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { connect } from "react-redux";
+import { View, StyleSheet } from "react-native";
+
+import PostPage from "../components/Home/PostPage";
 
 class PostScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Post Screen</Text>
-        <Text>{this.props.selectedPost}</Text>
+        <PostPage />
       </View>
     );
   }
 }
 
-mapStateToProps = state => {
-  return {
-    selectedPost: state.posts.selectedPost
-  };
-};
-
-export default connect(mapStateToProps)(PostScreen);
+export default PostScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
+    backgroundColor: "#fff"
   }
 });
