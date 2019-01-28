@@ -44,7 +44,6 @@ class CommentList extends Component {
             keyExtractor={comment => comment._id}
           />
         </Row>
-        <Divider styleName="line" />
       </View>
     );
   }

@@ -17,7 +17,9 @@ class HomeScreen extends Component {
 
   renderHomescreen() {
     if (this.props.postLoading) {
-      return <ActivityIndicator />;
+      return (
+        <ActivityIndicator size="large" style={styles.ActivityIndicator} />
+      );
     } else {
       return <HomePage navigation={this.props.navigation} />;
     }
@@ -44,5 +46,10 @@ export default connect(
 )(HomeScreen);
 
 const styles = StyleSheet.create({
-  container: { flex: 1 }
+  container: { flex: 1 },
+  ActivityIndicator: {
+    flex: 1,
+    alignSelf: "center",
+    justifyContent: "center"
+  }
 });
