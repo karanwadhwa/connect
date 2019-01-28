@@ -1,17 +1,34 @@
 import React, { Component } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, RefreshControl } from "react-native";
 import { connect } from "react-redux";
 import { View, Row, Divider, Text, Caption } from "@shoutem/ui";
 
 import PostHeader from "./PostHeader";
 import CommentList from "./CommentList";
 
+import { fetchSelectedPost } from "../../store/actions/posts";
+
 class PostPage extends Component {
+  handleRefresh = () => {
+    this.props.fetchSelectedPost(
+      this.props.accessToken,
+      this.props.selectedPost.post._id
+    );
+  };
+
   render() {
-    const { body, likes, comments } = this.props.selectedPost;
+    const { body, likes, comments } = this.props.selectedPost.post;
     return (
-      <ScrollView style={styles.container}>
-        <PostHeader post={this.props.selectedPost} />
+      <ScrollView
+        style={styles.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.props.selectedPost.refreshing}
+            onRefresh={this.handleRefresh}
+          />
+        }
+      >
+        <PostHeader post={this.props.selectedPost.post} />
         <Divider styleName="line" />
         <Row>
           <View>
@@ -38,11 +55,15 @@ class PostPage extends Component {
 
 mapStateToProps = state => {
   return {
+    accessToken: state.auth.accessToken,
     selectedPost: state.posts.selectedPost
   };
 };
 
-export default connect(mapStateToProps)(PostPage);
+export default connect(
+  mapStateToProps,
+  { fetchSelectedPost }
+)(PostPage);
 
 const styles = StyleSheet.create({
   container: {

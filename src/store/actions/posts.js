@@ -3,10 +3,14 @@ import {
   POST_LOADING,
   POST_REFRESHING,
   LIKE_POST,
-  SELECT_POST
+  SELECT_POST,
+  SELECTED_POST_LOADING,
+  SELECTED_POST_REFRESHING,
+  FETCH_SELECTED_POST
 } from "./types";
 import API from "../../config/api";
 
+// fetch all posts accessible by the logged in user
 export const fetchPosts = token => dispatch => {
   dispatch(setPostRefreshing());
   dispatch(setPostLoading());
@@ -55,5 +59,33 @@ export const selectPost = post => {
   return {
     type: SELECT_POST,
     payload: post
+  };
+};
+
+// fetch a single (selected)post
+export const fetchSelectedPost = (token, postID) => dispatch => {
+  dispatch(setPostRefreshing());
+  dispatch(setPostLoading());
+  API.get("/api/posts/id=" + postID, {
+    headers: {
+      Authorization: token
+    }
+  }).then(response => {
+    dispatch({
+      type: FETCH_SELECTED_POST,
+      payload: response.data
+    });
+  });
+};
+
+export const setSelectedPostLoading = () => {
+  return {
+    type: SELECTED_POST_LOADING
+  };
+};
+
+export const setSelectedPostRefreshing = () => {
+  return {
+    type: SELECTED_POST_REFRESHING
   };
 };
