@@ -51,9 +51,9 @@ export const likePost = (token, postID) => dispatch => {
   });
 };
 
-export const selectPost = postID => {
+export const selectPost = post => {
   return {
     type: SELECT_POST,
-    payload: postID
+    payload: post
   };
 };

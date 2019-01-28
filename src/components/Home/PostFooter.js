@@ -28,7 +28,7 @@ class PostFooter extends Component {
   };
 
   openPost = () => {
-    this.props.selectPost(this.props.post._id);
+    this.props.selectPost(this.props.post);
     this.props.navigation.navigate("Post");
   };
 

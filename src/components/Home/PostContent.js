@@ -7,7 +7,7 @@ import { selectPost } from "../../store/actions/posts";
 
 class PostContent extends Component {
   openPost = () => {
-    this.props.selectPost(this.props.post._id);
+    this.props.selectPost(this.props.post);
     this.props.navigation.navigate("Post");
   };
 
@@ -32,14 +32,8 @@ class PostContent extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    selectedPost: state.posts.selectedPost
-  };
-};
-
 export default connect(
-  mapStateToProps,
+  null,
   { selectPost }
 )(PostContent);
 
