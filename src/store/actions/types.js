@@ -8,6 +8,7 @@ export const FETCH_POSTS = "FETCH_POSTS";
 export const POST_LOADING = "POST_LOADING";
 export const POST_REFRESHING = "POST_REFRESHING";
 export const LIKE_POST = "LIKE_POST";
+export const SELECT_POST = "SELECT_POST";
 
 export const FETCH_PROFILE = "FETCH_PROFILE";
 export const PROFILE_LOADING = "PROFILE_LOADING";

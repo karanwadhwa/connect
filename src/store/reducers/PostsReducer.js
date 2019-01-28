@@ -2,7 +2,8 @@ import {
   FETCH_POSTS,
   POST_LOADING,
   POST_REFRESHING,
-  LIKE_POST
+  LIKE_POST,
+  SELECT_POST
 } from "../actions/types";
 
 const inititalState = {
@@ -39,6 +40,11 @@ export default (state = inititalState, action) => {
       return {
         ...state,
         posts
+      };
+    case SELECT_POST:
+      return {
+        ...state,
+        selectedPost: action.payload
       };
     default:
       return state;

@@ -1,4 +1,10 @@
-import { FETCH_POSTS, POST_LOADING, POST_REFRESHING, LIKE_POST } from "./types";
+import {
+  FETCH_POSTS,
+  POST_LOADING,
+  POST_REFRESHING,
+  LIKE_POST,
+  SELECT_POST
+} from "./types";
 import API from "../../config/api";
 
 export const fetchPosts = token => dispatch => {
@@ -43,4 +49,11 @@ export const likePost = (token, postID) => dispatch => {
       payload: response.data
     });
   });
+};
+
+export const selectPost = postID => {
+  return {
+    type: SELECT_POST,
+    payload: postID
+  };
 };
