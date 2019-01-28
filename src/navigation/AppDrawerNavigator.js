@@ -10,6 +10,7 @@ import Icon from "@expo/vector-icons/Ionicons";
 import HomeScreen from "../screens/HomeScreen";
 import PostScreen from "../screens/PostScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import CreatePostScreen from "../screens/CreatePostScreen";
 
 const HomeStackNavigator = createStackNavigator(
   {
@@ -55,7 +56,8 @@ const AppStackNavigator = createStackNavigator({
 });
 
 const AppDrawerNavigator = createDrawerNavigator({
-  Home: AppStackNavigator
+  Home: AppStackNavigator,
+  "Create Post": CreatePostScreen
 });
 
 export default AppDrawerNavigator;
