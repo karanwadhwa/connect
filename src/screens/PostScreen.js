@@ -1,17 +1,25 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { connect } from "react-redux";
 
-class SettingsScreen extends Component {
+class PostScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
         <Text>Post Screen</Text>
+        <Text>{this.props.selectedPost}</Text>
       </View>
     );
   }
 }
 
-export default SettingsScreen;
+mapStateToProps = state => {
+  return {
+    selectedPost: state.posts.selectedPost
+  };
+};
+
+export default connect(mapStateToProps)(PostScreen);
 
 const styles = StyleSheet.create({
   container: {

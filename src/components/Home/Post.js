@@ -16,7 +16,7 @@ class Post extends Component {
       <Card>
         <PostHeader post={item} />
         <Divider styleName="line" />
-        <PostContent post={item} />
+        <PostContent post={item} navigation={this.props.navigation} />
         <Divider styleName="line" />
         <PostFooter post={item} navigation={this.props.navigation} />
       </Card>

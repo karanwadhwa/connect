@@ -1,13 +1,21 @@
 import React, { Component } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { connect } from "react-redux";
 import { View, Row, Caption, Text } from "@shoutem/ui";
 
+import { selectPost } from "../../store/actions/posts";
+
 class PostContent extends Component {
+  openPost = () => {
+    this.props.selectPost(this.props.post._id);
+    this.props.navigation.navigate("Post");
+  };
+
   render() {
     const { body, likes, comments } = this.props.post;
     return (
       <Row>
-        <View>
+        <TouchableOpacity onPress={this.openPost}>
           <Text styleName="multiline">{body}</Text>
           <View styleName="horizontal" style={{ paddingTop: 5 }}>
             <Caption styleName="bold" style={styles.meta}>
@@ -18,13 +26,22 @@ class PostContent extends Component {
               {comments.length} {comments.length === 1 ? "Comment" : "Comments"}
             </Caption>
           </View>
-        </View>
+        </TouchableOpacity>
       </Row>
     );
   }
 }
 
-export default PostContent;
+const mapStateToProps = state => {
+  return {
+    selectedPost: state.posts.selectedPost
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { selectPost }
+)(PostContent);
 
 const styles = StyleSheet.create({
   meta: {

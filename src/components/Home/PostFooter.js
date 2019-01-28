@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { View, Button, Icon, Text } from "@shoutem/ui";
-import { likePost } from "../../store/actions/posts";
+import { likePost, selectPost } from "../../store/actions/posts";
 
 class PostFooter extends Component {
   checkLiked = () => {
@@ -27,6 +27,11 @@ class PostFooter extends Component {
     }
   };
 
+  openPost = () => {
+    this.props.selectPost(this.props.post._id);
+    this.props.navigation.navigate("Post");
+  };
+
   render() {
     return (
       <View styleName="horizontal">
@@ -38,10 +43,7 @@ class PostFooter extends Component {
         >
           {this.checkLiked()}
         </Button>
-        <Button
-          styleName="full-width muted"
-          onPress={() => this.props.navigation.navigate("Post")}
-        >
+        <Button styleName="full-width muted" onPress={this.openPost}>
           <Icon name="comment" />
           <Text>COMMENT</Text>
         </Button>
@@ -53,13 +55,14 @@ class PostFooter extends Component {
 const mapStateToProps = state => {
   return {
     accessToken: state.auth.accessToken,
-    user: state.auth.user
+    user: state.auth.user,
+    selectedPost: state.posts.selectedPost
   };
 };
 
 export default connect(
   mapStateToProps,
-  { likePost }
+  { likePost, selectPost }
 )(PostFooter);
 
 const styles = StyleSheet.create({
