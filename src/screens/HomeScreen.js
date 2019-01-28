@@ -19,7 +19,7 @@ class HomeScreen extends Component {
     if (this.props.postLoading) {
       return <ActivityIndicator />;
     } else {
-      return <HomePage />;
+      return <HomePage navigation={this.props.navigation} />;
     }
   }
 

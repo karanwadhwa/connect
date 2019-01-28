@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Button } from "react-native";
 
 import Post from "./Post";
 
@@ -7,7 +7,7 @@ class HomePage extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Post />
+        <Post navigation={this.props.navigation} />
       </View>
     );
   }

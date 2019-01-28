@@ -8,11 +8,24 @@ import {
 import Icon from "@expo/vector-icons/Ionicons";
 
 import HomeScreen from "../screens/HomeScreen";
+import PostScreen from "../screens/PostScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+
+const HomeStackNavigator = createStackNavigator(
+  {
+    Home: HomeScreen,
+    Post: PostScreen
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      header: null
+    })
+  }
+);
 
 const AppTabNavigator = createBottomTabNavigator({
   Home: {
-    screen: HomeScreen,
+    screen: HomeStackNavigator,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => <Icon name="ios-home" size={20} />
     }

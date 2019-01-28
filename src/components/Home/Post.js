@@ -18,7 +18,7 @@ class Post extends Component {
         <Divider styleName="line" />
         <PostContent post={item} />
         <Divider styleName="line" />
-        <PostFooter post={item} />
+        <PostFooter post={item} navigation={this.props.navigation} />
       </Card>
     );
   };

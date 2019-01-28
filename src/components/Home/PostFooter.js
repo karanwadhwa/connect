@@ -38,7 +38,10 @@ class PostFooter extends Component {
         >
           {this.checkLiked()}
         </Button>
-        <Button styleName="full-width muted">
+        <Button
+          styleName="full-width muted"
+          onPress={() => this.props.navigation.navigate("Post")}
+        >
           <Icon name="comment" />
           <Text>COMMENT</Text>
         </Button>
