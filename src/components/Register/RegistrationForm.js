@@ -231,9 +231,8 @@ const styles = StyleSheet.create({
     fontFamily: "nunito-extra-bold"
   },
   label: {
-    fontWeight: "700",
-    color: "#333333",
-    opacity: 0.8
+    fontFamily: "Rubik-Regular",
+    color: "#333333"
   },
   error: {
     fontWeight: "500",
