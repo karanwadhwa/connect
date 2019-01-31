@@ -3,10 +3,21 @@ import {
   ScrollView,
   StyleSheet,
   RefreshControl,
-  ActivityIndicator
+  ActivityIndicator,
+  TouchableOpacity,
+  KeyboardAvoidingView
 } from "react-native";
 import { connect } from "react-redux";
-import { View, Row, Divider, Text, Caption } from "@shoutem/ui";
+import {
+  View,
+  Row,
+  Divider,
+  Text,
+  Caption,
+  Image,
+  TextInput
+} from "@shoutem/ui";
+import Ionicon from "@expo/vector-icons/Ionicons";
 
 import PostHeader from "./PostHeader";
 import CommentList from "./CommentList";
@@ -29,36 +40,73 @@ class PostPage extends Component {
       );
     } else {
       return (
-        <ScrollView
-          style={styles.container}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.props.selectedPost.refreshing}
-              onRefresh={this.handleRefresh}
-            />
-          }
+        <KeyboardAvoidingView
+          behavior="position"
+          keyboardVerticalOffset={80}
+          enabled
         >
-          <PostHeader post={this.props.selectedPost.post} />
-          <Divider styleName="line" />
-          <Row>
-            <View>
-              <Text styleName="multiline">{body}</Text>
-              <View styleName="horizontal" style={{ paddingTop: 5 }}>
-                <Caption styleName="bold" style={styles.meta}>
-                  {likes.length} {likes.length === 1 ? "Like" : "Likes"}
-                  {"\t \t"}
-                </Caption>
-                <Caption styleName="bold" style={styles.meta}>
-                  {comments.length}{" "}
-                  {comments.length === 1 ? "Comment" : "Comments"}
-                </Caption>
+          <ScrollView
+            style={styles.container}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.props.selectedPost.refreshing}
+                onRefresh={this.handleRefresh}
+              />
+            }
+          >
+            <PostHeader post={this.props.selectedPost.post} />
+            <Divider styleName="line" />
+            <Row>
+              <View>
+                <Text styleName="multiline">{body}</Text>
+                <View styleName="horizontal" style={{ paddingTop: 5 }}>
+                  <Caption styleName="bold" style={styles.meta}>
+                    {likes.length} {likes.length === 1 ? "Like" : "Likes"}
+                    {"\t \t"}
+                  </Caption>
+                  <Caption styleName="bold" style={styles.meta}>
+                    {comments.length}{" "}
+                    {comments.length === 1 ? "Comment" : "Comments"}
+                  </Caption>
+                </View>
               </View>
-            </View>
-          </Row>
-          <Divider styleName="line" />
-          <CommentList comments={comments} />
-          <Divider styleName="line" />
-        </ScrollView>
+            </Row>
+            <Divider styleName="line" />
+            <CommentList comments={comments} />
+            <Divider styleName="line" />
+            <Row
+              styleName="small"
+              style={{
+                flex: 1,
+                justifyContent: "space-between"
+              }}
+            >
+              <Image
+                styleName="small-avatar"
+                source={{
+                  uri: this.props.user.avatar
+                }}
+              />
+              <TextInput
+                placeholder="Add a Comment"
+                multiline={true}
+                selectionColor="cyan"
+                style={{
+                  paddingVertical: 2,
+                  width: "75%"
+                }}
+              />
+              <TouchableOpacity
+                style={{
+                  padding: 20
+                }}
+              >
+                <Ionicon name="ios-send" size={24} />
+              </TouchableOpacity>
+            </Row>
+            <Divider styleName="line" />
+          </ScrollView>
+        </KeyboardAvoidingView>
       );
     }
   };
@@ -71,6 +119,7 @@ class PostPage extends Component {
 mapStateToProps = state => {
   return {
     accessToken: state.auth.accessToken,
+    user: state.auth.user,
     selectedPost: state.posts.selectedPost
   };
 };
