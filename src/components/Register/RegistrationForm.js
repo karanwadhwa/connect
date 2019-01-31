@@ -4,7 +4,6 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  KeyboardAvoidingView,
   Alert,
   Picker,
   Platform
@@ -53,7 +52,7 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView style={styles.formContainer}>
+      <View style={styles.formContainer}>
         <Formik
           initialValues={{
             fname: "",
@@ -198,7 +197,7 @@ class LoginForm extends Component {
             </React.Fragment>
           )}
         />
-      </KeyboardAvoidingView>
+      </View>
     );
   }
 }
