@@ -37,13 +37,11 @@ class CommentList extends Component {
   render() {
     return (
       <View>
-        <Row>
-          <FlatList
-            data={this.props.comments}
-            renderItem={this.renderComment}
-            keyExtractor={comment => comment._id}
-          />
-        </Row>
+        <FlatList
+          data={this.props.comments}
+          renderItem={this.renderComment}
+          keyExtractor={comment => comment._id}
+        />
       </View>
     );
   }
