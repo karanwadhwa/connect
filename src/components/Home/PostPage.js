@@ -22,14 +22,32 @@ import Ionicon from "@expo/vector-icons/Ionicons";
 import PostHeader from "./PostHeader";
 import CommentList from "./CommentList";
 
-import { fetchSelectedPost } from "../../store/actions/posts";
+import { fetchSelectedPost, commentPost } from "../../store/actions/posts";
 
 class PostPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { comment: "" };
+  }
   handleRefresh = () => {
     this.props.fetchSelectedPost(
       this.props.accessToken,
       this.props.selectedPost.post._id
     );
+  };
+
+  handleSubmit = () => {
+    const newComment = {
+      body: this.state.comment
+    };
+
+    this.props.commentPost(
+      this.props.accessToken,
+      this.props.selectedPost.post._id,
+      newComment
+    );
+
+    this.setState({ comment: "" });
   };
 
   renderPostPage = () => {
@@ -90,6 +108,8 @@ class PostPage extends Component {
               <TextInput
                 placeholder="Add a Comment"
                 multiline={true}
+                onChangeText={comment => this.setState({ comment })}
+                value={this.state.comment}
                 selectionColor="cyan"
                 style={{
                   paddingVertical: 2,
@@ -100,6 +120,7 @@ class PostPage extends Component {
                 style={{
                   padding: 20
                 }}
+                onPress={this.handleSubmit}
               >
                 <Ionicon name="ios-send" size={24} />
               </TouchableOpacity>
@@ -126,7 +147,7 @@ mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchSelectedPost }
+  { fetchSelectedPost, commentPost }
 )(PostPage);
 
 const styles = StyleSheet.create({
