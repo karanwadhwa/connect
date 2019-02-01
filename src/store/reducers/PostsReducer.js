@@ -5,7 +5,8 @@ import {
   LIKE_POST,
   SELECT_POST,
   SELECTED_POST_LOADING,
-  FETCH_SELECTED_POST
+  FETCH_SELECTED_POST,
+  COMMENT_POST
 } from "../actions/types";
 
 const inititalState = {
@@ -78,6 +79,18 @@ export default (state = inititalState, action) => {
           refreshing: false
         }
       };
+    case COMMENT_POST: {
+      let posts = [...state.posts];
+      let index = posts.findIndex(post => post._id === action.payload._id);
+      posts[index] = action.payload;
+      return {
+        ...state,
+        posts,
+        selectedPost: {
+          post: action.payload
+        }
+      };
+    }
     default:
       return state;
   }

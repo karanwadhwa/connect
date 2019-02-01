@@ -6,7 +6,8 @@ import {
   SELECT_POST,
   SELECTED_POST_LOADING,
   SELECTED_POST_REFRESHING,
-  FETCH_SELECTED_POST
+  FETCH_SELECTED_POST,
+  COMMENT_POST
 } from "./types";
 import API from "../../config/api";
 
@@ -88,4 +89,17 @@ export const setSelectedPostRefreshing = () => {
   return {
     type: SELECTED_POST_REFRESHING
   };
+};
+
+export const commentPost = (token, postID, commentData) => dispatch => {
+  API.post("/api/posts/comment/id=" + postID, commentData, {
+    headers: {
+      Authorization: token
+    }
+  }).then(response => {
+    dispatch({
+      type: COMMENT_POST,
+      payload: response.data
+    });
+  });
 };
