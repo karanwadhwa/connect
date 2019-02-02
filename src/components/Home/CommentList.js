@@ -1,14 +1,6 @@
 import React, { Component } from "react";
 import { FlatList, StyleSheet } from "react-native";
-import {
-  Row,
-  Text,
-  View,
-  Image,
-  Subtitle,
-  Caption,
-  Divider
-} from "@shoutem/ui";
+import { Row, Text, View, Image, Subtitle, Caption } from "@shoutem/ui";
 import moment from "moment";
 import { startCase } from "lodash";
 
@@ -28,7 +20,7 @@ class CommentList extends Component {
             <Subtitle>{startCase(item.author)}</Subtitle>
             <Caption>{moment(item.date).fromNow()}</Caption>
           </View>
-          <Text>{item.body}</Text>
+          <Text selectable={true}>{item.body}</Text>
         </View>
       </Row>
     );

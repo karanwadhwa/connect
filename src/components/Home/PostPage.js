@@ -121,7 +121,9 @@ class PostPage extends Component {
             <Divider styleName="line" />
             <Row>
               <View>
-                <Text styleName="multiline">{body}</Text>
+                <Text styleName="multiline" selectable={true}>
+                  {body}
+                </Text>
                 <View
                   styleName="horizontal space-between"
                   style={{ paddingTop: 5 }}
