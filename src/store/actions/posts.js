@@ -117,3 +117,16 @@ export const deletePost = (token, postID) => dispatch => {
     });
   });
 };
+
+export const deleteComment = (token, postID, commentID) => dispatch => {
+  API.delete(`/api/posts/comment/pid=${postID}&&cid=${commentID}`, {
+    headers: {
+      Authorization: token
+    }
+  }).then(response => {
+    dispatch({
+      type: FETCH_SELECTED_POST,
+      payload: response.data.post
+    });
+  });
+};
