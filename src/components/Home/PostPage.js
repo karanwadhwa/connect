@@ -5,7 +5,8 @@ import {
   RefreshControl,
   ActivityIndicator,
   TouchableOpacity,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Alert
 } from "react-native";
 import { connect } from "react-redux";
 import {
@@ -17,12 +18,17 @@ import {
   Image,
   TextInput
 } from "@shoutem/ui";
+import FIcon from "@expo/vector-icons/Feather";
 import Ionicon from "@expo/vector-icons/Ionicons";
 
 import PostHeader from "./PostHeader";
 import CommentList from "./CommentList";
 
-import { fetchSelectedPost, commentPost } from "../../store/actions/posts";
+import {
+  fetchSelectedPost,
+  commentPost,
+  deletePost
+} from "../../store/actions/posts";
 
 class PostPage extends Component {
   constructor(props) {
@@ -48,6 +54,46 @@ class PostPage extends Component {
     );
 
     this.setState({ comment: "" });
+  };
+
+  deletePost = () => {
+    Alert.alert(
+      "Wait, are you sure about this?",
+      "You are about to delete this post. Once deleted, all post data will be lost in the depths of space forever and ever.",
+      [
+        {
+          text: "No, Take me back.",
+          style: "cancel"
+        },
+        {
+          text: "Cool! Delete it.",
+          onPress: () => {
+            this.props.deletePost(
+              this.props.accessToken,
+              this.props.selectedPost.post._id
+            );
+
+            this.props.navigation.navigate("Home");
+          }
+        }
+      ]
+    );
+  };
+
+  deleteComponent = () => {
+    const { selectedPost, user } = this.props;
+    if (selectedPost.post.author === `${user.fname} ${user.lname}`) {
+      return (
+        <TouchableOpacity styleName="bold" onPress={this.deletePost}>
+          <View styleName="horizontal v-center">
+            <FIcon name="trash-2" color="red" size={12} />
+            <Caption styleName="bold" style={{ color: "red", paddingLeft: 5 }}>
+              Delete
+            </Caption>
+          </View>
+        </TouchableOpacity>
+      );
+    }
   };
 
   renderPostPage = () => {
@@ -76,15 +122,21 @@ class PostPage extends Component {
             <Row>
               <View>
                 <Text styleName="multiline">{body}</Text>
-                <View styleName="horizontal" style={{ paddingTop: 5 }}>
-                  <Caption styleName="bold" style={styles.meta}>
-                    {likes.length} {likes.length === 1 ? "Like" : "Likes"}
-                    {"\t \t"}
-                  </Caption>
-                  <Caption styleName="bold" style={styles.meta}>
-                    {comments.length}{" "}
-                    {comments.length === 1 ? "Comment" : "Comments"}
-                  </Caption>
+                <View
+                  styleName="horizontal space-between"
+                  style={{ paddingTop: 5 }}
+                >
+                  <View styleName="horizontal">
+                    <Caption styleName="bold" style={styles.meta}>
+                      {likes.length} {likes.length === 1 ? "Like" : "Likes"}
+                      {"\t \t"}
+                    </Caption>
+                    <Caption styleName="bold" style={styles.meta}>
+                      {comments.length}{" "}
+                      {comments.length === 1 ? "Comment" : "Comments"}
+                    </Caption>
+                  </View>
+                  {this.deleteComponent()}
                 </View>
               </View>
             </Row>
@@ -146,7 +198,7 @@ mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchSelectedPost, commentPost }
+  { fetchSelectedPost, commentPost, deletePost }
 )(PostPage);
 
 const styles = StyleSheet.create({

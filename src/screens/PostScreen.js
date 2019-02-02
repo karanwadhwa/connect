@@ -7,7 +7,7 @@ class PostScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <PostPage />
+        <PostPage navigation={this.props.navigation} />
       </View>
     );
   }
