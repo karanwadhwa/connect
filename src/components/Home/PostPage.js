@@ -51,12 +51,12 @@ class PostPage extends Component {
   };
 
   renderPostPage = () => {
-    const { body, likes, comments } = this.props.selectedPost.post;
     if (this.props.selectedPost.loading) {
       return (
         <ActivityIndicator size="large" style={styles.ActivityIndicator} />
       );
     } else {
+      const { body, likes, comments } = this.props.selectedPost.post;
       return (
         <KeyboardAvoidingView
           behavior="position"
@@ -64,7 +64,6 @@ class PostPage extends Component {
           enabled
         >
           <ScrollView
-            style={styles.container}
             refreshControl={
               <RefreshControl
                 refreshing={this.props.selectedPost.refreshing}
@@ -133,7 +132,7 @@ class PostPage extends Component {
   };
 
   render() {
-    return <View>{this.renderPostPage()}</View>;
+    return <View style={styles.container}>{this.renderPostPage()}</View>;
   }
 }
 
@@ -152,8 +151,7 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    //flex: 1,
-    backgroundColor: "#fff"
+    flex: 1
   },
   meta: {
     color: "#107AFB",

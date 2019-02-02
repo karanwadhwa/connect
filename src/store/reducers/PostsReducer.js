@@ -5,6 +5,7 @@ import {
   LIKE_POST,
   SELECT_POST,
   SELECTED_POST_LOADING,
+  SELECTED_POST_REFRESHING,
   FETCH_SELECTED_POST,
   COMMENT_POST
 } from "../actions/types";
@@ -63,7 +64,7 @@ export default (state = inititalState, action) => {
           loading: true
         }
       };
-    case POST_REFRESHING:
+    case SELECTED_POST_REFRESHING:
       return {
         ...state,
         selectedPost: {

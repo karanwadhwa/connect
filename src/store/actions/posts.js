@@ -65,8 +65,8 @@ export const selectPost = post => {
 
 // fetch a single (selected)post
 export const fetchSelectedPost = (token, postID) => dispatch => {
-  dispatch(setPostRefreshing());
-  dispatch(setPostLoading());
+  dispatch(setSelectedPostRefreshing());
+  dispatch(setSelectedPostLoading());
   API.get("/api/posts/id=" + postID, {
     headers: {
       Authorization: token
