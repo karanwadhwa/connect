@@ -7,7 +7,8 @@ import {
   SELECTED_POST_LOADING,
   SELECTED_POST_REFRESHING,
   FETCH_SELECTED_POST,
-  COMMENT_POST
+  COMMENT_POST,
+  DELETE_POST
 } from "./types";
 import API from "../../config/api";
 
@@ -100,6 +101,19 @@ export const commentPost = (token, postID, commentData) => dispatch => {
     dispatch({
       type: COMMENT_POST,
       payload: response.data
+    });
+  });
+};
+
+export const deletePost = (token, postID) => dispatch => {
+  API.delete("/api/posts/id=" + postID, {
+    headers: {
+      Authorization: token
+    }
+  }).then(response => {
+    dispatch({
+      type: DELETE_POST,
+      payload: response.data.post
     });
   });
 };
