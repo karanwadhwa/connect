@@ -3,6 +3,7 @@ import { Text, View, TextInput, StyleSheet } from "react-native";
 import Icon from "@expo/vector-icons/Ionicons";
 
 const defaultBorderColor = "rgba(172,172,172,0.7)";
+const defaultHeight = 45;
 
 class FormInput extends PureComponent {
   _handleChange = value => {
@@ -19,19 +20,21 @@ class FormInput extends PureComponent {
       error,
       placeholder,
       icon,
+      style,
       iconColor,
       borderColor = defaultBorderColor,
+      height = defaultHeight,
       ...rest
     } = this.props;
     return (
       <View>
         <Text style={styles.label}>{label}</Text>
         <Text style={styles.error}>{error}</Text>
-        <View style={[styles.inputBox, { borderColor }]}>
+        <View style={[styles.inputBox, { borderColor, height }]}>
           <TextInput
             onChangeText={this._handleChange}
             onBlur={this._handleTouch}
-            style={{ width: "90%" }}
+            style={[{ width: "90%", height: "100%" }, style]}
             placeholder={placeholder}
             placeholderTextColor="rgba(172,172,172,0.5)"
             {...rest}
@@ -56,7 +59,7 @@ const styles = StyleSheet.create({
     opacity: 0.7
   },
   inputBox: {
-    height: 45,
+    height: defaultHeight,
     borderWidth: 1,
     borderColor: defaultBorderColor,
     marginBottom: 20,
