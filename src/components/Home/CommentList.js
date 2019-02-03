@@ -12,15 +12,14 @@ class CommentList extends Component {
   renderComment = ({ item }) => {
     const { accessToken, user, post, deleteComment } = this.props;
     let disabled = true;
-    let close = true;
-
+    let type = "default";
     if (
       post.author === `${user.fname} ${user.lname}` ||
       item.author === `${user.fname} ${user.lname}` ||
       user.userKey === "admin"
     ) {
       disabled = false;
-      close = false;
+      type = "delete";
     }
 
     return (
@@ -28,7 +27,7 @@ class CommentList extends Component {
         right={[
           {
             text: "Delete",
-            type: "delete",
+            type,
             disabled,
             onPress: () => deleteComment(accessToken, post._id, item._id)
           }
