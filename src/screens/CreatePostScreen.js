@@ -1,13 +1,9 @@
 import React, { Component } from "react";
-import { Text, View } from "react-native";
+import CreatePostPage from "../components/NewPost/CreatePostPage";
 
 class CreatePostScreen extends Component {
   render() {
-    return (
-      <View>
-        <Text>Create Post Screen</Text>
-      </View>
-    );
+    return <CreatePostPage />;
   }
 }
 
