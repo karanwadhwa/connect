@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { View, Text, StatusBar, Platform, StyleSheet } from "react-native";
+import { View, StatusBar, Platform, StyleSheet } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import LoginTitle from "./LoginTitle";
 import LoginForm from "./LoginForm";
@@ -9,9 +10,15 @@ class LoginPage extends Component {
   render() {
     return (
       <View style={[styles.container, styles.androidHeader]}>
-        <LoginTitle />
-        <LoginForm navigation={this.props.navigation} />
-        <LoginBottom navigation={this.props.navigation} />
+        <KeyboardAwareScrollView
+          enableAutomaticScroll={true}
+          extraScrollHeight={80}
+          enableOnAndroid={true}
+        >
+          <LoginTitle />
+          <LoginForm navigation={this.props.navigation} />
+          <LoginBottom navigation={this.props.navigation} />
+        </KeyboardAwareScrollView>
       </View>
     );
   }

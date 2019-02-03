@@ -93,10 +93,11 @@ class LoginForm extends Component {
                 >
                   <Text style={styles.buttonText}>LOGIN</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ width: 125, alignSelf: "center" }}>
+                <TouchableOpacity
+                  style={{ width: "100%", alignItems: "center" }}
+                >
                   <Text style={{ color: "#107AFB", fontFamily: "nunito-bold" }}>
                     Forgot Password?
-                    <Text>{this.props.err}</Text>
                   </Text>
                 </TouchableOpacity>
               </View>
