@@ -6,29 +6,30 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  TextInput,
   StyleSheet,
   Platform,
-  StatusBar,
-  TextInput
+  StatusBar
 } from "react-native";
 import { WebBrowser } from "expo";
 import { ActionSheetCustom as ActionSheet } from "react-native-actionsheet";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { Subtitle } from "@shoutem/ui";
 
 import HorizontalRule from "../common/HorizontalRule";
 
-import Ionicons from "@expo/vector-icons/Ionicons";
-
 class CreatePostPage extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       title: "",
       postAudience: [],
+      availableAudience: [...this.props.user.audience] || [],
       body: "",
       errors: {
         title: "",
-        audience: "",
+        postAudience: "",
         body: ""
       }
     };
@@ -37,7 +38,7 @@ class CreatePostPage extends Component {
   componentDidMount() {
     if (this.props.user.audience.length === 0) {
       this.setState({
-        errors: { audience: "No audience has been assigned to you yet." }
+        errors: { postAudience: "No audience has been assigned to you yet." }
       });
     }
   }
@@ -45,12 +46,9 @@ class CreatePostPage extends Component {
   handleSubmit = () => {
     Alert.alert(
       `Title: ${this.state.title}`,
-      `Audience: ${this.state.audience}\nPost: ${this.state.body}`
+      `Audience: ${this.state.postAudience}\nPost: ${this.state.body}`
     );
-    console.log(this.state);
   };
-
-  renderSelectedAudience = () => {};
 
   renderActionSheet = () => {
     return (
@@ -58,18 +56,50 @@ class CreatePostPage extends Component {
         ref={o => (this.ActionSheet = o)}
         title="Select your audience"
         message="Only the audience you select will receive this post."
-        options={this.props.user.audience.concat(["Cancel"])}
-        cancelButtonIndex={this.props.user.audience.length}
-        destructiveButtonIndex={this.props.user.audience.length}
+        options={this.state.availableAudience.concat(["Cancel"])}
+        cancelButtonIndex={this.state.availableAudience.length}
+        destructiveButtonIndex={this.state.availableAudience.length}
         onPress={index => {
-          console.log(index);
+          if (index == this.state.availableAudience.length) return;
+
+          this.pushAudienceItem(index);
         }}
       />
     );
   };
 
   showActionSheet = () => {
-    this.ActionSheet.show();
+    if (this.state.availableAudience.length === 0) {
+      return Alert.alert(
+        "",
+        "You have selected all possible audiences available to you."
+      );
+    } else {
+      this.ActionSheet.show();
+    }
+  };
+
+  // remove AudienceItem from availableAudience and add to postAudience
+  pushAudienceItem = index => {
+    let postAudience = [...this.state.postAudience];
+    let availableAudience = [...this.state.availableAudience];
+
+    postAudience.push(this.state.availableAudience[index]);
+    availableAudience.splice(index, 1);
+
+    this.setState({ postAudience, availableAudience });
+  };
+
+  // remove AudienceItem from postAudience and add to availableAudience
+  popAudienceItem = item => {
+    let postAudience = [...this.state.postAudience];
+    const index = postAudience.indexOf(item);
+    postAudience.splice(index, 1);
+
+    this.setState({
+      postAudience,
+      availableAudience: [...this.state.availableAudience, item]
+    });
   };
 
   render() {
@@ -91,19 +121,37 @@ class CreatePostPage extends Component {
             />
           </View>
 
+          <TouchableOpacity onPress={this.showActionSheet}>
+            <View
+              style={{
+                backgroundColor: "",
+                justifyContent: "space-between",
+                flexDirection: "row",
+                paddingVertical: 10
+              }}
+            >
+              <Text style={styles.label}>Audience</Text>
+              <Ionicons name="ios-add-circle-outline" size={20} />
+            </View>
+          </TouchableOpacity>
+          <Text style={styles.error}>{this.state.errors.postAudience}</Text>
+
           <View
             style={{
-              backgroundColor: "",
-              justifyContent: "space-between",
-              flexDirection: "row"
+              flexDirection: "row",
+              flexWrap: "wrap"
             }}
           >
-            <Text style={styles.label}>Audience</Text>
-            <TouchableOpacity onPress={this.showActionSheet}>
-              <Ionicons name="ios-add-circle-outline" size={18} />
-            </TouchableOpacity>
+            {this.state.postAudience.map((item, key) => (
+              <TouchableOpacity
+                key={key}
+                onPress={() => this.popAudienceItem(item)}
+              >
+                <Subtitle style={styles.audienceBadge}>{item}</Subtitle>
+              </TouchableOpacity>
+            ))}
           </View>
-          <Text style={styles.error}>{this.state.errors.audience}</Text>
+
           <View style={{ marginBottom: 20 }} />
           {this.renderActionSheet()}
 
@@ -193,6 +241,12 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "red",
     opacity: 0.7
+  },
+  audienceBadge: {
+    backgroundColor: "#DDEEFF",
+    paddingHorizontal: 7,
+    marginRight: 10,
+    marginBottom: 15
   },
   inputBox: {
     height: 45,
