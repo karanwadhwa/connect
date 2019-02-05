@@ -8,7 +8,8 @@ import {
   SELECTED_POST_REFRESHING,
   FETCH_SELECTED_POST,
   COMMENT_POST,
-  DELETE_POST
+  DELETE_POST,
+  ADD_NEW_POST
 } from "../actions/types";
 
 const inititalState = {
@@ -97,6 +98,14 @@ export default (state = inititalState, action) => {
       let posts = [...state.posts];
       let index = posts.findIndex(post => post._id === action.payload._id);
       posts.splice(index, 1);
+      return {
+        ...state,
+        posts
+      };
+    }
+    case ADD_NEW_POST: {
+      let posts = [...state.posts];
+      posts.unshift(action.payload);
       return {
         ...state,
         posts

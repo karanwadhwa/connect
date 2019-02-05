@@ -8,7 +8,8 @@ import {
   SELECTED_POST_REFRESHING,
   FETCH_SELECTED_POST,
   COMMENT_POST,
-  DELETE_POST
+  DELETE_POST,
+  ADD_NEW_POST
 } from "./types";
 import API from "../../config/api";
 
@@ -129,4 +130,11 @@ export const deleteComment = (token, postID, commentID) => dispatch => {
       payload: response.data.post
     });
   });
+};
+
+export const addNewPost = post => {
+  return {
+    type: ADD_NEW_POST,
+    payload: post
+  };
 };
