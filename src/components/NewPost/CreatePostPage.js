@@ -16,6 +16,9 @@ import { ActionSheetCustom as ActionSheet } from "react-native-actionsheet";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Subtitle } from "@shoutem/ui";
 
+import API from "../../config/api";
+import { addNewPost } from "../../store/actions/posts";
+
 import HorizontalRule from "../common/HorizontalRule";
 
 class CreatePostPage extends Component {
@@ -29,7 +32,7 @@ class CreatePostPage extends Component {
       body: "",
       errors: {
         title: "",
-        postAudience: "",
+        audience: "",
         body: ""
       }
     };
@@ -44,10 +47,29 @@ class CreatePostPage extends Component {
   }
 
   handleSubmit = () => {
-    Alert.alert(
-      `Title: ${this.state.title}`,
-      `Audience: ${this.state.postAudience}\nPost: ${this.state.body}`
-    );
+    const newPost = {
+      title: this.state.title,
+      audience: this.state.postAudience.toString(),
+      body: this.state.body
+    };
+
+    API.post("/api/posts/", newPost, {
+      headers: {
+        Authorization: this.props.accessToken
+      }
+    })
+      .then(response => {
+        this.setState({ title: "", body: "" });
+        this.props.addNewPost(response.data);
+        /* Alert.alert("", "Post Successful", [
+          {
+            text: "Take Me Home",
+            onPress: () => this.props.navigation.navigate("Home")
+          }
+        ]); */
+        this.props.navigation.navigate("Home");
+      })
+      .catch(error => this.setState({ errors: error.response.data }));
   };
 
   renderActionSheet = () => {
@@ -79,7 +101,7 @@ class CreatePostPage extends Component {
     }
   };
 
-  // remove AudienceItem from availableAudience and add to postAudience
+  // add AudienceItem to postAudience and remove from availableAudience
   pushAudienceItem = index => {
     let postAudience = [...this.state.postAudience];
     let availableAudience = [...this.state.availableAudience];
@@ -87,7 +109,11 @@ class CreatePostPage extends Component {
     postAudience.push(this.state.availableAudience[index]);
     availableAudience.splice(index, 1);
 
-    this.setState({ postAudience, availableAudience });
+    this.setState({
+      postAudience,
+      availableAudience,
+      errors: { audience: "" }
+    });
   };
 
   // remove AudienceItem from postAudience and add to availableAudience
@@ -134,7 +160,7 @@ class CreatePostPage extends Component {
               <Ionicons name="ios-add-circle-outline" size={20} />
             </View>
           </TouchableOpacity>
-          <Text style={styles.error}>{this.state.errors.postAudience}</Text>
+          <Text style={styles.error}>{this.state.errors.audience}</Text>
 
           <View
             style={{
@@ -160,7 +186,9 @@ class CreatePostPage extends Component {
           <View style={[styles.inputBox, { height: 200 }]}>
             <TextInput
               value={this.state.body}
-              onChangeText={body => this.setState({ body })}
+              onChangeText={body =>
+                this.setState({ body, errors: { body: "" } })
+              }
               textAlignVertical="top"
               multiline={true}
               returnKeyType="go"
@@ -206,7 +234,10 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(CreatePostPage);
+export default connect(
+  mapStateToProps,
+  { addNewPost }
+)(CreatePostPage);
 
 const styles = StyleSheet.create({
   container: {
