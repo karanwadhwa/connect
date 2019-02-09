@@ -9,7 +9,7 @@ export const setToken = token => {
 };
 
 export const setUser = token => dispatch => {
-  API.get("/api/auth/test-protected-route", {
+  API.get("/api/auth/whoami", {
     headers: {
       Authorization: token
     }
