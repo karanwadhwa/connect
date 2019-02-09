@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  Text,
   View,
   StyleSheet,
   AsyncStorage,
@@ -9,12 +8,12 @@ import {
 import { connect } from "react-redux";
 
 import { setToken } from "../store/actions/auth";
+import API from "../config/api";
 
 class AuthLoadingScreen extends Component {
   constructor() {
     super();
 
-    //this.props.setToken;
     this.loadApp();
   }
 
@@ -23,7 +22,21 @@ class AuthLoadingScreen extends Component {
 
     this.props.setToken(JSON.parse(token));
 
-    this.props.navigation.navigate(this.props.accessToken ? "App" : "Auth");
+    if (this.props.accessToken) {
+      API.get("/api/auth/whoami", {
+        headers: {
+          Authorization: this.props.accessToken
+        }
+      })
+        .then(response =>
+          this.props.navigation.navigate(response.data.user ? "App" : "Login")
+        )
+        .catch(err => {
+          this.props.navigation.navigate("Login");
+        });
+    } else {
+      this.props.navigation.navigate("Auth");
+    }
   };
 
   render() {
