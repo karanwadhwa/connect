@@ -28,9 +28,22 @@ class AuthLoadingScreen extends Component {
           Authorization: this.props.accessToken
         }
       })
-        .then(response =>
-          this.props.navigation.navigate(response.data.user ? "App" : "Login")
-        )
+        .then(response => {
+          if (!response.data.user) {
+            this.props.navigation.navigate("Login");
+          }
+          API.get("/api/profile", {
+            headers: {
+              Authorization: this.props.accessToken
+            }
+          })
+            .then(response =>
+              this.props.navigation.navigate(
+                response.data ? "App" : "NewProfile"
+              )
+            )
+            .catch(err => this.props.navigation.navigate("NewProfile"));
+        })
         .catch(err => {
           this.props.navigation.navigate("Login");
         });

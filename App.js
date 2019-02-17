@@ -5,6 +5,7 @@ import { AppLoading, Font, Asset } from "expo";
 
 import AuthLoadingScreen from "./src/screens/AuthLoadingScreen";
 import AuthStackNavigator from "./src/navigation/AuthStackNavigator";
+import NewProfileScreen from "./src/screens/NewProfileScreen";
 import AppDrawerNavigator from "./src/navigation/AppDrawerNavigator";
 
 import store from "./src/store";
@@ -60,6 +61,7 @@ class App extends Component {
 const RootSwitchNavigator = createSwitchNavigator({
   AuthLoadingScreen: AuthLoadingScreen,
   Auth: AuthStackNavigator,
+  NewProfile: NewProfileScreen,
   App: AppDrawerNavigator
 });
 
