@@ -20,13 +20,15 @@ class ActionSheetInput extends Component {
         options={[...options, "Cancel"]}
         cancelButtonIndex={options.length}
         destructiveButtonIndex={options.length}
-        onPress={index => onChange(name, options[index])}
+        onPress={index => {
+          this.props.onTouch(this.props.name);
+          onChange(name, options[index]);
+        }}
       />
     );
   };
 
   showActionSheet = () => {
-    this.props.onTouch(this.props.name);
     this.ActionSheet.show();
   };
 
@@ -38,7 +40,10 @@ class ActionSheetInput extends Component {
         <Text style={styles.label}>{label}</Text>
         <Text style={styles.error}>{error}</Text>
         <View style={styles.inputBox}>
-          <TouchableOpacity ref="dept" onPress={this.showActionSheet}>
+          <TouchableOpacity
+            style={{ width: "100%" }}
+            onPress={this.showActionSheet}
+          >
             <TextInput
               value={value}
               placeholder={placeholder}
