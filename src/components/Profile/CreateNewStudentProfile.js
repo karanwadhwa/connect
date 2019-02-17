@@ -5,7 +5,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Platform,
-  StatusBar
+  StatusBar,
+  AsyncStorage
 } from "react-native";
 import { Text, Subtitle, Divider } from "@shoutem/ui";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -19,6 +20,11 @@ import HorizontalRule from "../common/HorizontalRule";
 import classArray from "../../config/constants/classArray";
 
 class CreateNewStudentProfile extends Component {
+  logout = async () => {
+    await AsyncStorage.clear();
+    this.props.navigation.navigate("AuthLoadingScreen");
+  };
+
   render() {
     return (
       <View style={[styles.container, styles.androidHeader]}>
@@ -215,7 +221,16 @@ class CreateNewStudentProfile extends Component {
                     >
                       <Text style={styles.buttonText}>SUBMIT</Text>
                     </TouchableOpacity>
-
+                    <TouchableOpacity onPress={this.logout}>
+                      <Text
+                        style={{
+                          color: "red",
+                          fontFamily: "nunito-extra-bold"
+                        }}
+                      >
+                        Cancel
+                      </Text>
+                    </TouchableOpacity>
                     <HorizontalRule width="80%" />
                   </View>
                 </React.Fragment>
@@ -243,11 +258,11 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     justifyContent: "flex-start",
-    padding: 40
+    padding: 30
   },
   titleContainer: {
     alignItems: "center",
-    paddingTop: 30
+    paddingTop: 40
   },
   title: {
     fontSize: 25,
@@ -258,6 +273,15 @@ const styles = StyleSheet.create({
   sectionDivider: {
     marginVertical: 20,
     backgroundColor: "#F3F3F3"
+  },
+  label: {
+    fontFamily: "Rubik-Regular",
+    color: "#333333"
+  },
+  error: {
+    fontWeight: "500",
+    color: "red",
+    opacity: 0.7
   },
   inputLabel: {
     fontWeight: "700",
@@ -287,21 +311,20 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 10,
-    justifyContent: "center", // space-between
-    flexDirection: "column" //row
+    justifyContent: "center",
+    flexDirection: "column",
+    alignItems: "center"
   },
   button: {
     backgroundColor: "#107AFB",
     marginBottom: 10,
     paddingVertical: 14,
     borderRadius: 5,
-    width: "100%", //100
-    alignSelf: "center" //
+    width: "100%"
   },
   buttonText: {
     color: "#fff",
     textAlign: "center",
-    //fontWeight: "700"
     fontFamily: "nunito-extra-bold"
   }
 });
