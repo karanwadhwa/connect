@@ -3,6 +3,7 @@ export const SET_TOKEN = "SET_TOKEN";
 export const GET_TOKEN = "GET_TOKEN";
 
 export const SET_USER = "SET_USER";
+export const AUTH_LOADING = "AUTH_LOADING";
 
 export const FETCH_POSTS = "FETCH_POSTS";
 export const POST_LOADING = "POST_LOADING";

@@ -1,4 +1,4 @@
-import { SET_TOKEN, SET_USER } from "./types";
+import { SET_TOKEN, SET_USER, AUTH_LOADING } from "./types";
 import API from "../../config/api";
 
 export const setToken = token => {
@@ -9,6 +9,7 @@ export const setToken = token => {
 };
 
 export const setUser = token => dispatch => {
+  dispatch(setAuthLoading());
   API.get("/api/auth/whoami", {
     headers: {
       Authorization: token
@@ -26,4 +27,10 @@ export const setUser = token => dispatch => {
         payload: {}
       });
     });
+};
+
+export const setAuthLoading = () => {
+  return {
+    type: AUTH_LOADING
+  };
 };
