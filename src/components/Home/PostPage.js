@@ -82,10 +82,7 @@ class PostPage extends Component {
 
   deleteComponent = () => {
     const { selectedPost, user } = this.props;
-    if (
-      selectedPost.post.author === `${user.fname} ${user.lname}` ||
-      user.userType === "admin"
-    ) {
+    if (selectedPost.post.userKey === user._id || user.userType === "admin") {
       return (
         <TouchableOpacity styleName="bold" onPress={this.deletePost}>
           <View styleName="horizontal v-center">

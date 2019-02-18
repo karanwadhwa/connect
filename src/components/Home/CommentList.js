@@ -14,9 +14,9 @@ class CommentList extends Component {
     let disabled = true;
     let type = "default";
     if (
-      post.author === `${user.fname} ${user.lname}` ||
-      item.author === `${user.fname} ${user.lname}` ||
-      user.userKey === "admin"
+      post.userKey === user._id ||
+      item.userKey === user._id ||
+      user.userType === "admin"
     ) {
       disabled = false;
       type = "delete";
