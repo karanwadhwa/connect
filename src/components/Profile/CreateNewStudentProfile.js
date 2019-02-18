@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   View,
   TextInput,
@@ -17,12 +18,34 @@ import FormInput from "../common/FormInput";
 import ActionSheetInput from "../common/ActionSheetInput";
 import HorizontalRule from "../common/HorizontalRule";
 
+import API from "../../config/api";
 import classArray from "../../config/constants/classArray";
+import mentorArray from "../../config/constants/mentorArray";
 
 class CreateNewStudentProfile extends Component {
   logout = async () => {
     await AsyncStorage.clear();
     this.props.navigation.navigate("AuthLoadingScreen");
+  };
+
+  _handleSubmit = (values, bag) => {
+    const mentor = mentorArray.find(
+      mentor => mentor.name === values.mentorName
+    );
+    values.mentorID = mentor.id;
+    values.batch = `${values.class}-${values.batch}`;
+    API.post("/api/profile/create/student", values, {
+      headers: {
+        Authorization: this.props.accessToken
+      }
+    })
+      .then(response => {
+        this.props.navigation.navigate("AuthLoadingScreen");
+      })
+      .catch(error => {
+        bag.setSubmitting(false);
+        bag.setErrors(error.response.data);
+      });
   };
 
   render() {
@@ -40,8 +63,6 @@ class CreateNewStudentProfile extends Component {
             <Formik
               initialValues={{
                 smartCardID: "",
-                phone: null,
-                bio: null,
                 mentorName: "",
                 mentorID: "",
                 department: "",
@@ -78,7 +99,9 @@ class CreateNewStudentProfile extends Component {
                 <React.Fragment>
                   <View style={styles.sectionDivider}>
                     <Divider styleName="line" />
-                    <Subtitle styleName="h-center">Personal Info</Subtitle>
+                    <Subtitle styleName="h-center">
+                      Personal Information
+                    </Subtitle>
                     <Divider styleName="line" />
                   </View>
                   <FormInput
@@ -122,7 +145,7 @@ class CreateNewStudentProfile extends Component {
                   </View>
                   <View style={styles.sectionDivider}>
                     <Divider styleName="line" />
-                    <Subtitle styleName="h-center">Mentor Info</Subtitle>
+                    <Subtitle styleName="h-center">Mentor Information</Subtitle>
                     <Divider styleName="line" />
                   </View>
 
@@ -133,14 +156,14 @@ class CreateNewStudentProfile extends Component {
                     value={values.mentorName}
                     placeholder="Mentor Name"
                     title="Mentor Name"
-                    options={["Uday Bhave", "Atul Kachre", "Manoj Dhande"]}
+                    options={mentorArray.map(mentor => mentor.name)}
                     onChange={setFieldValue}
                     onTouch={setFieldTouched}
                   />
 
                   <View style={styles.sectionDivider}>
                     <Divider styleName="line" />
-                    <Subtitle styleName="h-center">Course Info</Subtitle>
+                    <Subtitle styleName="h-center">Course Information</Subtitle>
                     <Divider styleName="line" />
                   </View>
 
@@ -170,7 +193,7 @@ class CreateNewStudentProfile extends Component {
                     placeholder="Current course year"
                     title="Course Year"
                     message="Select your current course year"
-                    options={["F.E.", "S.E.", "T.E.", "B.E."]}
+                    options={["FE", "SE", "TE", "BE"]}
                     onChange={setFieldValue}
                     onTouch={setFieldTouched}
                   />
@@ -243,7 +266,13 @@ class CreateNewStudentProfile extends Component {
   }
 }
 
-export default CreateNewStudentProfile;
+const mapStateToProps = state => {
+  return {
+    accessToken: state.auth.accessToken
+  };
+};
+
+export default connect(mapStateToProps)(CreateNewStudentProfile);
 
 const styles = StyleSheet.create({
   container: {
