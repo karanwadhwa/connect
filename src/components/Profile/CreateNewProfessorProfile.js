@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   View,
   TextInput,
@@ -13,16 +14,31 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Formik } from "formik";
 import * as Yup from "yup";
 
+import API from "../../config/api";
+
 import FormInput from "../common/FormInput";
 import ActionSheetInput from "../common/ActionSheetInput";
 import HorizontalRule from "../common/HorizontalRule";
-
-import classArray from "../../config/constants/classArray";
 
 class CreateNewProfessorProfile extends Component {
   logout = async () => {
     await AsyncStorage.clear();
     this.props.navigation.navigate("AuthLoadingScreen");
+  };
+
+  _handleSubmit = (values, bag) => {
+    API.post("/api/profile/create/professor", values, {
+      headers: {
+        Authorization: this.props.accessToken
+      }
+    })
+      .then(response => {
+        this.props.navigation.navigate("AuthLoadingScreen");
+      })
+      .catch(error => {
+        bag.setSubmitting(false);
+        bag.setErrors(error.response.data);
+      });
   };
 
   render() {
@@ -39,8 +55,6 @@ class CreateNewProfessorProfile extends Component {
           <View style={styles.formContainer}>
             <Formik
               initialValues={{
-                phone: null,
-                bio: null,
                 department: "",
                 designation: ""
               }}
@@ -140,6 +154,7 @@ class CreateNewProfessorProfile extends Component {
                   />
 
                   <View style={styles.buttonContainer}>
+                    <Text style={styles.error}>{errors.existingProfile}</Text>
                     <TouchableOpacity
                       style={styles.button}
                       onPress={handleSubmit}
@@ -169,7 +184,13 @@ class CreateNewProfessorProfile extends Component {
   }
 }
 
-export default CreateNewProfessorProfile;
+const mapStateToProps = state => {
+  return {
+    accessToken: state.auth.accessToken
+  };
+};
+
+export default connect(mapStateToProps)(CreateNewProfessorProfile);
 
 const styles = StyleSheet.create({
   container: {
