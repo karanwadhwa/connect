@@ -64,15 +64,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-
-  androidHeader: {
-    ...Platform.select({
-      android: {
-        paddingTop: StatusBar.currentHeight
-      }
-    })
-  },
-
   header: {
     height: 100,
     width: "100%",

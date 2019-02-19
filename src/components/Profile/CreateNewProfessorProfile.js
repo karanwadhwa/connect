@@ -196,13 +196,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
-  androidHeader: {
-    ...Platform.select({
-      android: {
-        paddingTop: StatusBar.currentHeight
-      }
-    })
-  },
   formContainer: {
     justifyContent: "flex-start",
     padding: 30

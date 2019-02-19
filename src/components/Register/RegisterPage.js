@@ -29,12 +29,5 @@ export default RegisterPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1
-  },
-  androidHeader: {
-    ...Platform.select({
-      android: {
-        paddingTop: StatusBar.currentHeight
-      }
-    })
   }
 });

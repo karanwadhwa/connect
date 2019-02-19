@@ -30,12 +30,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
     //backgroundColor: "#3498db"
-  },
-  androidHeader: {
-    ...Platform.select({
-      android: {
-        paddingTop: StatusBar.currentHeight
-      }
-    })
   }
 });

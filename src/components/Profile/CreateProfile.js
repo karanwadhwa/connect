@@ -8,7 +8,7 @@ import {
   AsyncStorage
 } from "react-native";
 import { connect } from "react-redux";
-import { Subtitle, Button, Heading } from "@shoutem/ui";
+import { Heading, Subtitle } from "@shoutem/ui";
 
 import CreateNewStudentProfile from "./CreateNewStudentProfile";
 import CreateNewProfessorProfile from "./CreateNewProfessorProfile";
