@@ -129,7 +129,7 @@ class StudentProfile extends Component {
             style={styles.list}
           >
             <Title>Mentor Name</Title>
-            <Subtitle>{upperFirst(profile.mentor.userID)}</Subtitle>
+            <Subtitle>{upperFirst(profile.mentor.name)}</Subtitle>
           </View>
           <Divider styleName="line" />
           <View
