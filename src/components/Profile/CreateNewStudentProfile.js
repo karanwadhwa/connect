@@ -20,7 +20,7 @@ import HorizontalRule from "../common/HorizontalRule";
 
 import API from "../../config/api";
 import classArray from "../../config/constants/classArray";
-import mentorArray from "../../config/constants/mentorArray";
+//import mentorArray from "../../config/constants/mentorArray";
 
 class CreateNewStudentProfile extends Component {
   logout = async () => {
@@ -29,17 +29,17 @@ class CreateNewStudentProfile extends Component {
   };
 
   _handleSubmit = (values, bag) => {
-    const mentor = mentorArray.find(
+    /* const mentor = mentorArray.find(
       mentor => mentor.name === values.mentorName
     );
     values.mentorID = mentor.id;
-    values.batch = `${values.class}-${values.batch}`;
+    values.batch = `${values.class}-${values.batch}`; */
     API.post("/api/profile/create/student", values, {
       headers: {
         Authorization: this.props.accessToken
       }
     })
-      .then(response => {
+      .then(() => {
         this.props.navigation.navigate("AuthLoadingScreen");
       })
       .catch(error => {
@@ -63,8 +63,8 @@ class CreateNewStudentProfile extends Component {
             <Formik
               initialValues={{
                 smartCardID: "",
-                mentorName: "",
-                mentorID: "",
+                //mentorName: "",
+                //mentorID: "",
                 department: "",
                 year: "",
                 class: "",
@@ -76,7 +76,8 @@ class CreateNewStudentProfile extends Component {
                 smartCardID: Yup.string().required(
                   "Your Smart Card ID is required"
                 ),
-                mentorName: Yup.string().required("*required"),
+                //mentorName: Yup.string().required("*required"),
+                phone: Yup.number().required("Phone number is required"),
                 department: Yup.string().required("*required"),
                 year: Yup.string().required("*required"),
                 class: Yup.string().required("*required"),
@@ -117,8 +118,8 @@ class CreateNewStudentProfile extends Component {
                     error={touched.smartCardID && errors.smartCardID}
                   />
                   <FormInput
-                    label="Phone No."
-                    placeholder="10 digit phone no. (optional)"
+                    label="Phone"
+                    placeholder="10 digit Phone number"
                     keyboardType="phone-pad"
                     autoCorrect={false}
                     returnKeyType="next"
@@ -149,7 +150,7 @@ class CreateNewStudentProfile extends Component {
                     <Divider styleName="line" />
                   </View>
 
-                  <ActionSheetInput
+                  {/* <ActionSheetInput
                     label="Mentor Name"
                     error={touched.mentorName && errors.mentorName}
                     name="mentorName"
@@ -159,7 +160,7 @@ class CreateNewStudentProfile extends Component {
                     options={mentorArray.map(mentor => mentor.name)}
                     onChange={setFieldValue}
                     onTouch={setFieldTouched}
-                  />
+                  /> */}
 
                   <View style={styles.sectionDivider}>
                     <Divider styleName="line" />
