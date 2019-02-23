@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { ScrollView, FlatList, StyleSheet } from "react-native";
 import { View, Row, Text, Title, Subtitle, Divider } from "@shoutem/ui";
-import { upperFirst } from "lodash";
+import { upperFirst, startCase } from "lodash";
 
 import ProfileHeader from "./ProfileHeader";
 
@@ -129,7 +129,9 @@ class StudentProfile extends Component {
             style={styles.list}
           >
             <Title>Mentor Name</Title>
-            <Subtitle>{upperFirst(profile.mentor.name)}</Subtitle>
+            <Subtitle>
+              {profile.mentor ? startCase(profile.mentor.name) : "-"}
+            </Subtitle>
           </View>
           <Divider styleName="line" />
           <View
@@ -137,7 +139,9 @@ class StudentProfile extends Component {
             style={styles.list}
           >
             <Title>Staff ID</Title>
-            <Subtitle>{upperFirst(profile.mentor.userID)}</Subtitle>
+            <Subtitle>
+              {profile.mentor ? upperFirst(profile.mentor.userID) : "-"}
+            </Subtitle>
           </View>
 
           {this.renderStudentBodies()}

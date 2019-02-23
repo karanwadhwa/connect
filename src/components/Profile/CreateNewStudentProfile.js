@@ -13,6 +13,7 @@ import { Text, Subtitle, Divider } from "@shoutem/ui";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { toUpper } from "lodash";
 
 import FormInput from "../common/FormInput";
 import ActionSheetInput from "../common/ActionSheetInput";
@@ -32,8 +33,9 @@ class CreateNewStudentProfile extends Component {
     /* const mentor = mentorArray.find(
       mentor => mentor.name === values.mentorName
     );
-    values.mentorID = mentor.id;
-    values.batch = `${values.class}-${values.batch}`; */
+    values.mentorID = mentor.id; */
+    values.smartCardID = toUpper(values.smartCardID);
+    values.batch = `${values.class}-${values.batch}`;
     API.post("/api/profile/create/student", values, {
       headers: {
         Authorization: this.props.accessToken
@@ -128,7 +130,7 @@ class CreateNewStudentProfile extends Component {
                     value={values.phone}
                     onChange={setFieldValue}
                     onTouch={setFieldTouched}
-                    error={errors.phone}
+                    error={touched.phone && errors.phone}
                   />
                   <Text style={styles.label}>Bio</Text>
                   <Text style={styles.error}>{errors.bio}</Text>
@@ -144,11 +146,11 @@ class CreateNewStudentProfile extends Component {
                       placeholderTextColor="rgba(172,172,172,0.5)"
                     />
                   </View>
-                  <View style={styles.sectionDivider}>
+                  {/* <View style={styles.sectionDivider}>
                     <Divider styleName="line" />
                     <Subtitle styleName="h-center">Mentor Information</Subtitle>
                     <Divider styleName="line" />
-                  </View>
+                  </View> */}
 
                   {/* <ActionSheetInput
                     label="Mentor Name"
