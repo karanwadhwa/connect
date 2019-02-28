@@ -3,13 +3,14 @@ import { connect } from "react-redux";
 import { Text, View } from "react-native";
 
 import StudentProfile from "./StudentProfile";
+import ProfessorProfile from "./ProfessorProfile";
 
 export class ProfilePage extends Component {
   renderProfile = () => {
     if (this.props.user.userType === "student") {
       return <StudentProfile />;
     } else {
-      return <Text>professor profile</Text>;
+      return <ProfessorProfile />;
     }
   };
 
