@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import { View, Title, Subtitle, Text, Divider } from "@shoutem/ui";
 
 import ProfileHeader from "./ProfileHeader";
+import MenteeAccordion from "./MenteeAccordion";
 
 class ProfessorProfile extends Component {
   renderBio = () => {
@@ -26,6 +27,7 @@ class ProfessorProfile extends Component {
             <Subtitle styleName="h-center">Mentees</Subtitle>
             <Divider styleName="line" />
           </View>
+          <MenteeAccordion mentees={mentees} />
         </View>
       );
     } else {
