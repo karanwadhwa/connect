@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, Alert, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { View, Row, Caption, Text } from "@shoutem/ui";
+import Hyperlink from "react-native-hyperlink";
 
 import { selectPost, deletePost } from "../../store/actions/posts";
 import FIcon from "@expo/vector-icons/Feather";
@@ -52,7 +53,9 @@ class PostContent extends Component {
       <Row>
         <View>
           <TouchableOpacity onPress={this.openPost}>
-            <Text styleName="multiline">{body}</Text>
+            <Hyperlink linkDefault={true} linkStyle={{ color: "#107AFB" }}>
+              <Text styleName="multiline">{body}</Text>
+            </Hyperlink>
           </TouchableOpacity>
           <View styleName="horizontal space-between" style={{ paddingTop: 5 }}>
             <View styleName="horizontal">

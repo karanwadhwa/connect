@@ -18,6 +18,7 @@ import {
   Image,
   TextInput
 } from "@shoutem/ui";
+import Hyperlink from "react-native-hyperlink";
 import FIcon from "@expo/vector-icons/Feather";
 import Ionicon from "@expo/vector-icons/Ionicons";
 
@@ -121,9 +122,11 @@ class PostPage extends Component {
             <Divider styleName="line" />
             <Row>
               <View>
-                <Text styleName="multiline" selectable={true}>
-                  {body}
-                </Text>
+                <Hyperlink linkDefault={true} linkStyle={{ color: "#107AFB" }}>
+                  <Text styleName="multiline" selectable={true}>
+                    {body}
+                  </Text>
+                </Hyperlink>
                 <View
                   styleName="horizontal space-between"
                   style={{ paddingTop: 5 }}
