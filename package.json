@@ -19,6 +19,7 @@
     "react-native-collapsible": "^1.4.0",
     "react-native-hyperlink": "0.0.14",
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
+    "react-native-modal": "^9.0.0",
     "react-native-swipeout": "^2.3.6",
     "react-navigation": "^3.0.9",
     "react-redux": "^6.0.0",
