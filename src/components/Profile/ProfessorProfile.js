@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { ScrollView, StyleSheet } from "react-native";
 import { View, Title, Subtitle, Text, Divider } from "@shoutem/ui";
+import ActionButton from "react-native-action-button";
+import Icon from "@expo/vector-icons/Ionicons";
 
 import ProfileHeader from "./ProfileHeader";
 import MenteeAccordion from "./MenteeAccordion";
@@ -39,8 +41,8 @@ class ProfessorProfile extends Component {
     const { user, profile } = this.props;
 
     return (
-      <ScrollView>
-        <View style={styles.container}>
+      <View style={styles.container}>
+        <ScrollView>
           <ProfileHeader user={user} profile={profile} />
           {this.renderBio()}
           <View style={{ paddingTop: 7 }} />
@@ -65,8 +67,25 @@ class ProfessorProfile extends Component {
             <Subtitle>{profile.designation}</Subtitle>
           </View>
           {this.renderMentees(profile.mentees)}
-        </View>
-      </ScrollView>
+        </ScrollView>
+
+        <ActionButton buttonColor="#4290E1" hideShadow={true}>
+          <ActionButton.Item
+            buttonColor="#335577"
+            title="Add Mentee"
+            onPress={() => {}}
+          >
+            <Icon name="ios-people" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item
+            buttonColor="#335577"
+            title="Change Profile Picture"
+            onPress={() => {}}
+          >
+            <Icon name="ios-images" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+        </ActionButton>
+      </View>
     );
   }
 }
@@ -93,5 +112,10 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingVertical: 5
+  },
+  actionButtonIcon: {
+    fontSize: 24,
+    height: 26,
+    color: "#fff"
   }
 });

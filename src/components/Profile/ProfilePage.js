@@ -15,7 +15,7 @@ export class ProfilePage extends Component {
   };
 
   render() {
-    return <View>{this.renderProfile()}</View>;
+    return <View style={{ flex: 1 }}>{this.renderProfile()}</View>;
   }
 }
 
