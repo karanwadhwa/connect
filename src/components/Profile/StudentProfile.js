@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { ScrollView, FlatList, StyleSheet } from "react-native";
-import { View, Row, Text, Title, Subtitle, Divider } from "@shoutem/ui";
+import { View, Text, Title, Subtitle, Divider } from "@shoutem/ui";
 import { upperFirst, startCase } from "lodash";
+import ActionButton from "react-native-action-button";
+import Icon from "@expo/vector-icons/Ionicons";
 
 import ProfileHeader from "./ProfileHeader";
+
+import uploadAvatar from "./uploadAvatar";
 
 class StudentProfile extends Component {
   renderBio = () => {
@@ -68,8 +72,8 @@ class StudentProfile extends Component {
   render() {
     const { user, profile } = this.props;
     return (
-      <ScrollView>
-        <View style={styles.container}>
+      <View style={styles.container}>
+        <ScrollView>
           <ProfileHeader user={user} profile={profile} />
           {this.renderBio()}
           <View style={{ paddingTop: 7 }} />
@@ -145,8 +149,18 @@ class StudentProfile extends Component {
           </View>
 
           {this.renderStudentBodies()}
-        </View>
-      </ScrollView>
+        </ScrollView>
+
+        <ActionButton buttonColor="#4290E1" hideShadow={true}>
+          <ActionButton.Item
+            buttonColor="#335577"
+            title="Change Profile Picture"
+            onPress={uploadAvatar}
+          >
+            <Icon name="ios-images" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+        </ActionButton>
+      </View>
     );
   }
 }
@@ -173,5 +187,10 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingVertical: 5
+  },
+  actionButtonIcon: {
+    fontSize: 24,
+    height: 26,
+    color: "#fff"
   }
 });
