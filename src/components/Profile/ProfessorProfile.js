@@ -15,6 +15,7 @@ import { startCase, has } from "lodash";
 
 import API from "../../config/api";
 import { fetchProfile } from "../../store/actions/profile";
+import uploadAvatar from "./uploadAvatar";
 
 import ProfileHeader from "./ProfileHeader";
 import MenteeAccordion from "./MenteeAccordion";
@@ -262,7 +263,7 @@ class ProfessorProfile extends Component {
           <ActionButton.Item
             buttonColor="#335577"
             title="Change Profile Picture"
-            onPress={() => {}}
+            onPress={uploadAvatar}
           >
             <Icon name="ios-images" style={styles.actionButtonIcon} />
           </ActionButton.Item>
