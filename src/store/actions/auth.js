@@ -1,4 +1,5 @@
 import { SET_TOKEN, SET_USER, AUTH_LOADING } from "./types";
+import firebase from "firebase";
 import API from "../../config/api";
 
 export const setToken = token => {
@@ -16,6 +17,9 @@ export const setUser = token => dispatch => {
     }
   })
     .then(response => {
+      // firebase signin
+      firebase.auth().signInWithCustomToken(response.data.user.firebaseToken);
+
       dispatch({
         type: SET_USER,
         payload: response.data.user

@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { Button, View, StyleSheet, AsyncStorage } from "react-native";
+import firebase from "firebase";
 
 class SettingsScreen extends Component {
   logout = async () => {
     await AsyncStorage.clear();
+    await firebase.auth().signOut();
     this.props.navigation.navigate("AuthLoadingScreen");
   };
 

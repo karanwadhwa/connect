@@ -6,6 +6,7 @@ import {
   ActivityIndicator
 } from "react-native";
 import { connect } from "react-redux";
+import firebase from "firebase";
 
 import { setToken } from "../store/actions/auth";
 import API from "../config/api";
@@ -30,8 +31,11 @@ class AuthLoadingScreen extends Component {
       })
         .then(response => {
           if (!response.data.user) {
+            // sign out of firebase if stored api token has expired
+            firebase.auth().signOut();
             this.props.navigation.navigate("Login");
           }
+
           API.get("/api/profile", {
             headers: {
               Authorization: this.props.accessToken
@@ -48,6 +52,7 @@ class AuthLoadingScreen extends Component {
           this.props.navigation.navigate("Login");
         });
     } else {
+      firebase.auth().signOut();
       this.props.navigation.navigate("Auth");
     }
   };
