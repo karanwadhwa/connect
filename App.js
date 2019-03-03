@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { Provider } from "react-redux";
 import { AppLoading, Font, Asset } from "expo";
+import firebase from "firebase";
 
 import AuthLoadingScreen from "./src/screens/AuthLoadingScreen";
 import AuthStackNavigator from "./src/navigation/AuthStackNavigator";
@@ -10,7 +11,29 @@ import AppDrawerNavigator from "./src/navigation/AppDrawerNavigator";
 
 import store from "./src/store";
 
+import {
+  FIREBASE_API_KEY,
+  FIREBASE_AUTH_DOMAIN,
+  FIREBASE_DATABASE_URL,
+  FIREBASE_PROJECT_ID,
+  FIREBASE_STORAGE_BUCKET,
+  FIREBASE_MESSAGING_SENDER_ID
+} from "react-native-dotenv";
+
 class App extends Component {
+  componentDidMount() {
+    // Initialize Firebase
+    const config = {
+      apiKey: FIREBASE_API_KEY,
+      authDomain: FIREBASE_AUTH_DOMAIN,
+      databaseURL: FIREBASE_DATABASE_URL,
+      projectId: FIREBASE_PROJECT_ID,
+      storageBucket: FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: FIREBASE_MESSAGING_SENDER_ID
+    };
+    firebase.initializeApp(config);
+  }
+
   state = {
     isLoadingComplete: false
   };
