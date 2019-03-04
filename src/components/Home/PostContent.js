@@ -53,7 +53,7 @@ class PostContent extends Component {
       <Row>
         <View>
           <TouchableOpacity onPress={this.openPost}>
-            <Hyperlink linkDefault={true} linkStyle={{ color: "#107AFB" }}>
+            <Hyperlink linkDefault={true} linkStyle={{ color: "#4290E1" }}>
               <Text styleName="multiline">{body}</Text>
             </Hyperlink>
           </TouchableOpacity>
@@ -89,8 +89,8 @@ export default connect(
 
 const styles = StyleSheet.create({
   meta: {
-    color: "#107AFB",
-    opacity: 0.8,
+    color: "#4290E1",
+    //opacity: 0.8,
     paddingRight: 15
   }
 });

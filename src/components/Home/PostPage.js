@@ -122,7 +122,7 @@ class PostPage extends Component {
             <Divider styleName="line" />
             <Row>
               <View>
-                <Hyperlink linkDefault={true} linkStyle={{ color: "#107AFB" }}>
+                <Hyperlink linkDefault={true} linkStyle={{ color: "#4290E1" }}>
                   <Text styleName="multiline" selectable={true}>
                     {body}
                   </Text>
@@ -211,8 +211,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   meta: {
-    color: "#107AFB",
-    opacity: 0.8
+    color: "#4290E1"
+    //opacity: 0.8
   },
   ActivityIndicator: {
     flex: 1,

@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10
   },
   link: {
-    color: "#107AFB",
+    color: "#1D5CA0",
     opacity: 0.75
   }
 });

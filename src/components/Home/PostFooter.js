@@ -67,7 +67,7 @@ export default connect(
 
 const styles = StyleSheet.create({
   liked: {
-    color: "#107AFB",
+    color: "#4290E1",
     opacity: 1
   }
 });
