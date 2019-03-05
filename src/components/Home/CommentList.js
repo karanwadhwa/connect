@@ -14,8 +14,8 @@ class CommentList extends Component {
     let disabled = true;
     let type = "default";
     if (
-      post.userKey === user._id ||
-      item.userKey === user._id ||
+      post.userKey === user.id ||
+      item.userKey === user.id ||
       user.userType === "admin"
     ) {
       disabled = false;

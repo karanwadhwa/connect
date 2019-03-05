@@ -33,7 +33,7 @@ class PostContent extends Component {
 
   deleteComponent = () => {
     const { post, user } = this.props;
-    if (post.userKey === user._id || user.userType === "admin") {
+    if (post.userKey === user.id || user.userType === "admin") {
       return (
         <TouchableOpacity styleName="bold" onPress={this.deletePost}>
           <View styleName="horizontal v-center">
