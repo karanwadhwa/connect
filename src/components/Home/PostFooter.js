@@ -7,7 +7,7 @@ import { likePost, selectPost } from "../../store/actions/posts";
 class PostFooter extends Component {
   checkLiked = () => {
     const like = this.props.post.likes.some(
-      item => item.userKey === this.props.user._id
+      item => item.userKey === this.props.user.id
     );
 
     if (like) {
