@@ -8,7 +8,11 @@ import Icon from "@expo/vector-icons/Ionicons";
 
 import ProfileHeader from "./ProfileHeader";
 
-import uploadAvatar from "./uploadAvatar";
+import API from "../../config/api";
+import { fetchProfile } from "../../store/actions/profile";
+import { updateUser } from "../../store/actions/auth";
+
+import uploadAvatarToFirebase from "./uploadAvatarToFirebase";
 
 class StudentProfile extends Component {
   renderBio = () => {
@@ -67,6 +71,21 @@ class StudentProfile extends Component {
         />
       </View>
     );
+  };
+
+  uploadAvatarToAPI = async () => {
+    const avatarURL = await uploadAvatarToFirebase(this.props.user.userID);
+    API.post(
+      "/api/profile/update/avatar",
+      { avatar: avatarURL },
+      {
+        headers: {
+          Authorization: this.props.accessToken
+        }
+      }
+    ).then(response => {
+      this.props.updateUser(response.data);
+    });
   };
 
   render() {
@@ -155,7 +174,7 @@ class StudentProfile extends Component {
           <ActionButton.Item
             buttonColor="#335577"
             title="Change Profile Picture"
-            onPress={uploadAvatar}
+            onPress={this.uploadAvatarToAPI}
           >
             <Icon name="ios-images" style={styles.actionButtonIcon} />
           </ActionButton.Item>
@@ -167,12 +186,16 @@ class StudentProfile extends Component {
 
 const mapStateToProps = state => {
   return {
+    accessToken: state.auth.accessToken,
     user: state.auth.user,
     profile: state.profile.profileData
   };
 };
 
-export default connect(mapStateToProps)(StudentProfile);
+export default connect(
+  mapStateToProps,
+  { fetchProfile, updateUser }
+)(StudentProfile);
 
 const styles = StyleSheet.create({
   container: {

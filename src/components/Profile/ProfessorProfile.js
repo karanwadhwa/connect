@@ -15,7 +15,8 @@ import { startCase, has } from "lodash";
 
 import API from "../../config/api";
 import { fetchProfile } from "../../store/actions/profile";
-import uploadAvatar from "./uploadAvatar";
+import { updateUser } from "../../store/actions/auth";
+import uploadAvatarToFirebase from "./uploadAvatarToFirebase";
 
 import ProfileHeader from "./ProfileHeader";
 import MenteeAccordion from "./MenteeAccordion";
@@ -210,6 +211,21 @@ class ProfessorProfile extends Component {
     </View>
   );
 
+  uploadAvatarToAPI = async () => {
+    const avatarURL = await uploadAvatarToFirebase(this.props.user.userID);
+    API.post(
+      "/api/profile/update/avatar",
+      { avatar: avatarURL },
+      {
+        headers: {
+          Authorization: this.props.accessToken
+        }
+      }
+    ).then(response => {
+      this.props.updateUser(response.data);
+    });
+  };
+
   render() {
     const { user, profile } = this.props;
 
@@ -263,7 +279,7 @@ class ProfessorProfile extends Component {
           <ActionButton.Item
             buttonColor="#335577"
             title="Change Profile Picture"
-            onPress={uploadAvatar}
+            onPress={this.uploadAvatarToAPI}
           >
             <Icon name="ios-images" style={styles.actionButtonIcon} />
           </ActionButton.Item>
@@ -283,7 +299,7 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchProfile }
+  { fetchProfile, updateUser }
 )(ProfessorProfile);
 
 const styles = StyleSheet.create({

@@ -38,3 +38,10 @@ export const setAuthLoading = () => {
     type: AUTH_LOADING
   };
 };
+
+export const updateUser = updatedUser => {
+  return {
+    type: SET_USER,
+    payload: updatedUser
+  };
+};
